@@ -15,7 +15,7 @@ public class BibliotecaAppTest {
     }
 
     @Test
-    public void main() {
+    public void checkWelcomeMessage() {
         final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         BibliotecaApp.main();
