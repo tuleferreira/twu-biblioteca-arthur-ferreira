@@ -18,7 +18,7 @@ public class BookTest {
     }
 
     @Test
-    public void constructorTest() {
+    public void shouldContainExpectedProperties() {
         assertThat("Test Title", is(testBook.getName()));
         assertThat("Test Author", is(testBook.getAuthor()));
         assertThat("Test Category", is(testBook.getCategory()));
@@ -30,7 +30,7 @@ public class BookTest {
     }
 
     @Test
-    public void bookToString() {
+    public void shouldTransformInString() {
         String bookString = testBook.toString();
 
         assertTrue(bookString.contains("Test Title"));

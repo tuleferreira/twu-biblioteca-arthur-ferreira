@@ -25,12 +25,12 @@ public class LibraryTest {
     }
 
     @Test
-    public void addBooks() {
+    public void shouldContainAddedBooks() {
         assertEquals(3, testLibrary.getBooksList().size());
     }
 
     @Test
-    public void listBooks() {
+    public void shouldShowBooks() {
         String allBooksList = testLibrary.showBooks();
 
         assertEquals(4, allBooksList.split("\n").length);
