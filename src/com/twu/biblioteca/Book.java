@@ -3,7 +3,7 @@ package com.twu.biblioteca;
 import java.time.LocalDate;
 
 public class Book {
-    private String id;
+    private int id;
     private String name;
     private String author;
     private String category;
@@ -11,7 +11,7 @@ public class Book {
     private LocalDate publishDate;
     private int rating;
 
-    public Book(String id, String name, String author, String category, String description, LocalDate publishDate, int rating) {
+    public Book(int id, String name, String author, String category, String description, LocalDate publishDate, int rating) {
         this.id = id;
         this.name = name;
         this.author = author;
@@ -21,11 +21,11 @@ public class Book {
         this.rating = rating;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -79,18 +79,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return name
-                + " - "
-                + author
-                + ", published in "
-                + publishDate.getDayOfMonth()
-                + "/"
-                + publishDate.getMonthValue()
-                + "/"
-                + publishDate.getYear()
-                + " and rated "
-                + rating
-                + ". ID: "
-                + id;
+        return String.format("| %07d | %-70s| %-30s| %-20s| %02d/%02d/%s | %-6s |", id, name, author, category, publishDate.getDayOfMonth(), publishDate.getMonthValue(), publishDate.getYear(), rating);
+
     }
 }

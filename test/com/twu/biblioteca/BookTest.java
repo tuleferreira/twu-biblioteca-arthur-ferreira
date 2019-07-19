@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.is;
 
@@ -15,12 +14,12 @@ public class BookTest {
 
     @Before
     public void setUp() {
-        testBook = new Book("1", "Test", "Test Author", "Test Category", "Test Description", LocalDate.of(1992, 04, 13), 5);
+        testBook = new Book(1, "Test Title", "Test Author", "Test Category", "Test Description", LocalDate.of(1992, 04, 13), 5);
     }
 
     @Test
     public void constructorTest() {
-        assertThat("Test", is(testBook.getName()));
+        assertThat("Test Title", is(testBook.getName()));
         assertThat("Test Author", is(testBook.getAuthor()));
         assertThat("Test Category", is(testBook.getCategory()));
         assertThat("Test Description", is(testBook.getDescription()));
@@ -32,6 +31,12 @@ public class BookTest {
 
     @Test
     public void bookToString() {
-        assertThat("Test - Test Author, published in 13/4/1992 and rated 5. ID: 1", is(testBook.toString()));
+        String bookString = testBook.toString();
+
+        assertTrue(bookString.contains("Test Title"));
+        assertTrue(bookString.contains("Test Author"));
+        assertTrue(bookString.contains("Test Category"));
+        assertTrue(bookString.contains("13/04/1992"));
+        assertTrue(bookString.contains("5"));
     }
 }

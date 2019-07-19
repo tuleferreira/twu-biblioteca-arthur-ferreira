@@ -17,7 +17,7 @@ public class Library {
     }
 
     public String showBooks() {
-        String allBooksString = "Books:\n";
+        String allBooksString = String.format("| %-7s | %-70s| %-30s| %-19s | %-10s | %s |\n", "ID", "BOOK", "AUTHOR", "CATEGORY", "PUBLISHED", "RATING");
 
         for (Book book : booksList) {
             allBooksString += book.toString();
