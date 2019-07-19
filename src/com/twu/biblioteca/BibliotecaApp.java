@@ -1,12 +1,10 @@
 package com.twu.biblioteca;
 
-import org.junit.runner.Computer;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.Scanner;
 
 public class BibliotecaApp {
+    static String welcomeMessage = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore";
 
     public static void main(String[] args) {
         Library mainLibrary = new Library();
@@ -16,12 +14,20 @@ public class BibliotecaApp {
         mainLibrary.addBookToList(new Book(3, "Harry Potter and the Prisoner of Azkaban", "J.K. Rowling", "Fantasy", "Let the magic of J.K. Rowling's classic Harry Potter series take you back to Hogwarts School of Witchcraft and Wizardry. Issued to mark the 20th anniversary of first publication of Harry Potter and the Prisoner of Azkaban, this irresistible Gryffindor House Edition celebrates the noble character of the Hogwarts house famed for its courage, bravery and determination. Harry's third year at Hogwarts is packed with thrilling Gryffindor moments, including the appearance four of its most memorable alumni, Messrs Moony, Wormtail, Padfoot and Prongs!", LocalDate.of(1999, 7, 8), 5));
         mainLibrary.addBookToList(new Book(4, "Talking to Robots : A Brief Guide to Our Human-Robot Futures", "David Ewing Duncan", "Computer Science", "'A refreshing variation on the will-intelligent-robots-bring-Armageddon genre . . . this colorful mixture of expert futurology and quirky speculation does not disappoint", LocalDate.of(2019, 7, 16), 4));
 
-        sayHello();
+        System.out.println(welcomeMessage + "\n");
 
-        System.out.println(mainLibrary.showBooks());
+        startMenu(mainLibrary);
     }
 
-    private static void sayHello() {
-        System.out.println("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore\n");
+    private static void startMenu(Library library) {
+        System.out.println("Choose between those options:\n" +
+                "1 - List of books.\n");
+
+        Scanner scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
+
+        if (choice == 1) {
+            System.out.println(library.getBooks());
+        }
     }
 }

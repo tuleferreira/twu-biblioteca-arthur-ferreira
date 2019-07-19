@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -31,7 +30,7 @@ public class LibraryTest {
 
     @Test
     public void shouldShowBooks() {
-        String allBooksList = testLibrary.showBooks();
+        String allBooksList = testLibrary.getBooks();
 
         assertEquals(4, allBooksList.split("\n").length);
     }
