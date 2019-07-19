@@ -18,8 +18,8 @@ public class BibliotecaAppTest {
     public void checkWelcomeMessage() {
         final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        BibliotecaApp.main();
-        assertEquals("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore\n", outContent.toString());
+        BibliotecaApp.main(new String[] {"a"});
+        assertEquals("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore", outContent.toString().split("\n")[0]);
         System.setOut(null);
     }
 }

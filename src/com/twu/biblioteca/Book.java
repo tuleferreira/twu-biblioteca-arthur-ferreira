@@ -1,6 +1,6 @@
 package com.twu.biblioteca;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Book {
     private String id;
@@ -8,10 +8,10 @@ public class Book {
     private String author;
     private String category;
     private String description;
-    private Date publishDate;
+    private LocalDate publishDate;
     private int rating;
 
-    public Book(String id, String name, String author, String category, String description, Date publishDate, int rating) {
+    public Book(String id, String name, String author, String category, String description, LocalDate publishDate, int rating) {
         this.id = id;
         this.name = name;
         this.author = author;
@@ -61,11 +61,11 @@ public class Book {
         this.description = description;
     }
 
-    public Date getPublishDate() {
+    public LocalDate getPublishDate() {
         return publishDate;
     }
 
-    public void setPublishDate(Date publishDate) {
+    public void setPublishDate(LocalDate publishDate) {
         this.publishDate = publishDate;
     }
 
@@ -75,5 +75,22 @@ public class Book {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+        return name
+                + " - "
+                + author
+                + ", published in "
+                + publishDate.getDayOfMonth()
+                + "/"
+                + publishDate.getMonthValue()
+                + "/"
+                + publishDate.getYear()
+                + " and rated "
+                + rating
+                + ". ID: "
+                + id;
     }
 }

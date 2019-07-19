@@ -15,4 +15,15 @@ public class Library {
     public void addBookToList(Book book) {
         booksList.add(book);
     }
+
+    public String showBooks() {
+        String allBooksString = "Books:\n";
+
+        for (Book book : booksList) {
+            allBooksString += book.toString();
+            allBooksString += "\n";
+        }
+
+        return allBooksString;
+    }
 }
