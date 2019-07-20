@@ -6,29 +6,24 @@ import java.util.Scanner;
 public class BibliotecaApp {
     static final String WELCOME_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore";
 
-
     public static void main(String[] args) {
         Library mainLibrary = new Library();
 
         System.out.println(WELCOME_MESSAGE + "\n");
 
-        startMenu(mainLibrary);
-    }
+        Menu mainMenu = new Menu();
 
-    private static void startMenu(Library library) {
-        System.out.println("Choose between those options:\n" +
-                "1 - List of books.\n");
+        System.out.println(mainMenu);
 
         Scanner scanner = new Scanner(System.in);
-        int choice = scanner.nextInt();
+        String choice = mainMenu.getOption(scanner.nextInt());
 
         switch (choice) {
-            case 1:
-                System.out.println(library.getBooks());
+            case "List of books.":
+                System.out.println(mainLibrary.toString());
                 break;
             default:
-                System.out.println("Please select a valid option!");
-                choice = scanner.nextInt();
+                System.out.println(choice);
         }
     }
 }

@@ -20,7 +20,7 @@ public class LibraryTest {
 
     @Test
     public void shouldShowBooks() {
-        String allBooksList = testLibrary.getBooks();
+        String allBooksList = testLibrary.toString();
 
         assertEquals(5, allBooksList.split("\n").length);
     }
