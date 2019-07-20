@@ -16,7 +16,7 @@ public class MenuTest {
 
     @Test
     public void shouldIndexOptionsByIntegerValue() {
-        assertThat("List of books.", is(menu.getOption(1)));
+        assertThat("List of books", is(menu.getOption(1)));
     }
 
     @Test
@@ -27,6 +27,7 @@ public class MenuTest {
     @Test
     public void shouldTransformToString() {
         assertThat("Choose between those options:\n" +
+                "0 - Quit.\n" +
                 "1 - List of books.\n", is(menu.toString()));
     }
 }

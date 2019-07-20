@@ -16,14 +16,20 @@ public class BibliotecaApp {
         System.out.println(mainMenu);
 
         Scanner scanner = new Scanner(System.in);
-        String choice = mainMenu.getOption(scanner.nextInt());
+        String choice;
 
-        switch (choice) {
-            case "List of books.":
-                System.out.println(mainLibrary.toString());
-                break;
-            default:
-                System.out.println(choice);
-        }
+        do {
+            choice = mainMenu.getOption(scanner.nextInt());
+
+            switch (choice) {
+                case "List of books":
+                    System.out.println(mainLibrary.toString());
+                    break;
+                case "Quit":
+                    break;
+                default:
+                    System.out.println(choice);
+            }
+        } while (!choice.equals("Quit"));
     }
 }
