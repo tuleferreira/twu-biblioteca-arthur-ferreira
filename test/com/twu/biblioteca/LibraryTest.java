@@ -3,6 +3,7 @@ package com.twu.biblioteca;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class LibraryTest {
@@ -20,8 +21,21 @@ public class LibraryTest {
 
     @Test
     public void shouldShowBooks() {
-        String allBooksList = testLibrary.toString();
+        assertEquals(5, testLibrary.toString().split("\n").length);
+    }
 
-        assertEquals(5, allBooksList.split("\n").length);
+    @Test
+    public void shouldCheckoutABook() {
+        testLibrary.checkoutBook(1);
+
+        assertFalse(testLibrary.getBooksList().get(1).isBorrowed());
+        assertTrue(testLibrary.getBookById(1).isBorrowed());
+    }
+
+    @Test
+    public void shouldShowOnlyNotBorrowedBooks() {
+        testLibrary.checkoutBook(1);
+
+        assertEquals(4, testLibrary.toString().split("\n").length);
     }
 }

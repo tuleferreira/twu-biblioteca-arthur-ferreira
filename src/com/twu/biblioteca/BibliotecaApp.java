@@ -13,17 +13,19 @@ public class BibliotecaApp {
 
         Menu mainMenu = new Menu();
 
-        System.out.println(mainMenu);
-
         Scanner scanner = new Scanner(System.in);
         String choice;
 
         do {
+            System.out.println(mainMenu);
+
             choice = mainMenu.getOption(scanner.nextInt());
 
             switch (choice) {
                 case "List of books":
                     System.out.println(mainLibrary.toString());
+                    System.out.println("Enter the ID of the book you want:");
+                    mainLibrary.checkoutBook(scanner.nextInt());
                     break;
                 case "Quit":
                     break;

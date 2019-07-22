@@ -14,11 +14,16 @@ public class BookTest {
 
     @Before
     public void setUp() {
-        testBook = new Book("Test Title", "Test Author", LocalDate.of(1992, 04, 13));
+        testBook = new Book(1, "Test Title", "Test Author", LocalDate.of(1992, 04, 13));
     }
 
     @Test
     public void shouldTransformInString() {
-        assertThat("| Test Title                                                            | Test Author                   | 13/04/1992 |", is(testBook.toString()));
+        assertThat("|       1 | Test Title                                                            | Test Author                   | 13/04/1992 |", is(testBook.toString()));
+    }
+
+    @Test
+    public void shouldHaveBorrowedProperty() {
+        assertFalse(testBook.isBorrowed());
     }
 }
