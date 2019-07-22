@@ -30,9 +30,11 @@ public class Library {
     public String checkoutBook(int id) {
         Book selectedBook = getBookById(id);
 
-        if (selectedBook != null) {
-            selectedBook.setBorrowed(true);
+        if (selectedBook == null || selectedBook.isBorrowed()) {
+            return "Sorry, that book is not available";
         }
+
+        selectedBook.setBorrowed(true);
 
         return "Thank you! Enjoy the book";
     }

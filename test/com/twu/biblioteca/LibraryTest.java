@@ -43,4 +43,12 @@ public class LibraryTest {
     public void shouldReturnASuccessfulMessageAfterCheckout() {
         assertThat("Thank you! Enjoy the book", is(testLibrary.checkoutBook(1)));
     }
+
+    @Test
+    public void shouldReturnAnUnsuccessfulMessageIfBookIsBorrowed() {
+        testLibrary.checkoutBook(1);
+
+        assertThat("Sorry, that book is not available", is(testLibrary.checkoutBook(1)));
+        assertThat("Sorry, that book is not available", is(testLibrary.checkoutBook(123)));
+    }
 }
