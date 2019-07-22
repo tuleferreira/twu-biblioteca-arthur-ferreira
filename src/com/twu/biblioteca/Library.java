@@ -62,6 +62,18 @@ public class Library {
         return SUCCESSFUL_CHECKOUT_MESSAGE;
     }
 
+    public void returnBook(int id) {
+        Book selectedBook = getBook(id);
+
+        selectedBook.setBorrowed(false);
+    }
+
+    public void returnBook(String name) {
+        Book selectedBook = getBook(name);
+
+        selectedBook.setBorrowed(false);
+    }
+
     @Override
     public String toString() {
         String allBooksString = String.format("| %7s | %-70s| %-30s| %-10s |\n", "ID", "BOOK", "AUTHOR", "PUBLISHED");

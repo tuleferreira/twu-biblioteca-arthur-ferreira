@@ -12,6 +12,7 @@ public class LibraryTest {
     @Before
     public void setUp() throws Exception {
         testLibrary = new Library();
+        testLibrary.checkoutBook(4);
     }
 
     @Test
@@ -21,11 +22,11 @@ public class LibraryTest {
 
     @Test
     public void shouldShowBooks() {
-        assertEquals(5, testLibrary.toString().split("\n").length);
+        assertEquals(4, testLibrary.toString().split("\n").length);
     }
 
     @Test
-    public void shouldReturnABook() {
+    public void shouldGetABookByNameOrID() {
         assertNotNull(is(testLibrary.getBook("Thoughts of Dog 2019-2020 16-Month Weekly/Monthly Diary")));
         assertNotNull(is(testLibrary.getBook(3)));
     }
@@ -43,7 +44,7 @@ public class LibraryTest {
     public void shouldShowOnlyNotBorrowedBooks() {
         testLibrary.checkoutBook(1);
         testLibrary.checkoutBook("Harry Potter and the Prisoner of Azkaban");
-        assertEquals(3, testLibrary.toString().split("\n").length);
+        assertEquals(2, testLibrary.toString().split("\n").length);
     }
 
     @Test
@@ -62,5 +63,20 @@ public class LibraryTest {
 
         assertThat("Sorry, that book is not available", is(testLibrary.checkoutBook(123)));
         assertThat("Sorry, that book is not available", is(testLibrary.checkoutBook("Harry Potterson")));
+    }
+
+    @Test
+    public void shouldReturnABookSuccessfully() {
+        assertTrue(testLibrary.getBook(4).isBorrowed());
+        testLibrary.returnBook(4);
+        assertFalse(testLibrary.getBook(4).isBorrowed());
+
+        testLibrary.checkoutBook("Talking to Robots : A Brief Guide to Our Human-Robot Futures");
+
+        assertTrue(testLibrary.getBook("Talking to Robots : A Brief Guide to Our Human-Robot Futures").isBorrowed());
+        testLibrary.returnBook("Talking to Robots : A Brief Guide to Our Human-Robot Futures");
+        assertFalse(testLibrary.getBook("Talking to Robots : A Brief Guide to Our Human-Robot Futures").isBorrowed());
+
+        assertEquals(5, testLibrary.toString().split("\n").length);
     }
 }
