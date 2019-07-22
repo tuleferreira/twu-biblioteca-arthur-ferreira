@@ -27,12 +27,14 @@ public class Library {
         return null;
     }
 
-    public void checkoutBook(int id) {
+    public String checkoutBook(int id) {
         Book selectedBook = getBookById(id);
 
         if (selectedBook != null) {
             selectedBook.setBorrowed(true);
         }
+
+        return "Thank you! Enjoy the book";
     }
 
     @Override

@@ -38,4 +38,9 @@ public class LibraryTest {
 
         assertEquals(4, testLibrary.toString().split("\n").length);
     }
+
+    @Test
+    public void shouldReturnASuccessfulMessageAfterCheckout() {
+        assertThat("Thank you! Enjoy the book", is(testLibrary.checkoutBook(1)));
+    }
 }
