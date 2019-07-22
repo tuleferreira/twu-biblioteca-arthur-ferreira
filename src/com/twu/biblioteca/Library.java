@@ -1,11 +1,12 @@
 package com.twu.biblioteca;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Library {
+    private final String SUCCESSFUL_CHECKOUT_MESSAGE = "Thank you! Enjoy the book";
+    private final String UNSUCCESSFUL_CHECKOUT_MESSAGE = "Sorry, that book is not available";
     private final List<Book> booksList = Arrays.asList(
             new Book(1, "A Game of Thrones", "George R. R. Martin", LocalDate.of(1996, 8, 1)),
             new Book(2, "Thoughts of Dog 2019-2020 16-Month Weekly/Monthly Diary", "Matt Nelson", LocalDate.of(2019, 8, 1)),
@@ -17,7 +18,7 @@ public class Library {
         return booksList;
     }
 
-    public Book getBookById(int id) {
+    public Book getBook(int id) {
         for (Book book : booksList) {
             if (book.getId() == id) {
                 return book;
@@ -27,16 +28,38 @@ public class Library {
         return null;
     }
 
+    public Book getBook(String name) {
+        for (Book book : booksList) {
+            if (book.getName().equals(name)) {
+                return book;
+            }
+        }
+
+        return null;
+    }
+
     public String checkoutBook(int id) {
-        Book selectedBook = getBookById(id);
+        Book selectedBook = getBook(id);
 
         if (selectedBook == null || selectedBook.isBorrowed()) {
-            return "Sorry, that book is not available";
+            return UNSUCCESSFUL_CHECKOUT_MESSAGE;
         }
 
         selectedBook.setBorrowed(true);
 
-        return "Thank you! Enjoy the book";
+        return SUCCESSFUL_CHECKOUT_MESSAGE;
+    }
+
+    public String checkoutBook(String name) {
+        Book selectedBook = getBook(name);
+
+        if (selectedBook == null || selectedBook.isBorrowed()) {
+            return UNSUCCESSFUL_CHECKOUT_MESSAGE;
+        }
+
+        selectedBook.setBorrowed(true);
+
+        return SUCCESSFUL_CHECKOUT_MESSAGE;
     }
 
     @Override
