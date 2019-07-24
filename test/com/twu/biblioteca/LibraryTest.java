@@ -79,4 +79,13 @@ public class LibraryTest {
 
         assertEquals(5, testLibrary.toString().split("\n").length);
     }
+
+    @Test
+    public void shouldGiveAMessageForAnUnsuccessfulReturn() {
+        assertThat("Thank you for returning the book", is(testLibrary.returnBook(4)));
+        assertThat("That is not a valid book to return.", is(testLibrary.returnBook(4)));
+
+        assertThat("That is not a valid book to return.", is(testLibrary.returnBook(9)));
+        assertThat("That is not a valid book to return.", is(testLibrary.returnBook("Wrong Book Title to Test Unsuccessful Message")));
+    }
 }

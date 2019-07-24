@@ -8,6 +8,7 @@ public class Library {
     private final String SUCCESSFUL_CHECKOUT_MESSAGE = "Thank you! Enjoy the book";
     private final String UNSUCCESSFUL_CHECKOUT_MESSAGE = "Sorry, that book is not available";
     private final String SUCCESSFUL_RETURNING_MESSAGE = "Thank you for returning the book";
+    private final String UNSUCCESSFUL_RETURNING_MESSAGE = "That is not a valid book to return.";
     private final List<Book> booksList = Arrays.asList(
             new Book(1, "A Game of Thrones", "George R. R. Martin", LocalDate.of(1996, 8, 1)),
             new Book(2, "Thoughts of Dog 2019-2020 16-Month Weekly/Monthly Diary", "Matt Nelson", LocalDate.of(2019, 8, 1)),
@@ -66,6 +67,10 @@ public class Library {
     public String returnBook(int id) {
         Book selectedBook = getBook(id);
 
+        if (selectedBook == null || !selectedBook.isBorrowed()) {
+            return UNSUCCESSFUL_RETURNING_MESSAGE;
+        }
+
         selectedBook.setBorrowed(false);
 
         return SUCCESSFUL_RETURNING_MESSAGE;
@@ -73,6 +78,10 @@ public class Library {
 
     public String returnBook(String name) {
         Book selectedBook = getBook(name);
+
+        if (selectedBook == null || !selectedBook.isBorrowed()) {
+            return UNSUCCESSFUL_RETURNING_MESSAGE;
+        }
 
         selectedBook.setBorrowed(false);
 
