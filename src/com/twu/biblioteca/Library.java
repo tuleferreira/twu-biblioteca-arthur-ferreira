@@ -7,6 +7,7 @@ import java.util.List;
 public class Library {
     private final String SUCCESSFUL_CHECKOUT_MESSAGE = "Thank you! Enjoy the book";
     private final String UNSUCCESSFUL_CHECKOUT_MESSAGE = "Sorry, that book is not available";
+    private final String SUCCESSFUL_RETURNING_MESSAGE = "Thank you for returning the book";
     private final List<Book> booksList = Arrays.asList(
             new Book(1, "A Game of Thrones", "George R. R. Martin", LocalDate.of(1996, 8, 1)),
             new Book(2, "Thoughts of Dog 2019-2020 16-Month Weekly/Monthly Diary", "Matt Nelson", LocalDate.of(2019, 8, 1)),
@@ -62,16 +63,20 @@ public class Library {
         return SUCCESSFUL_CHECKOUT_MESSAGE;
     }
 
-    public void returnBook(int id) {
+    public String returnBook(int id) {
         Book selectedBook = getBook(id);
 
         selectedBook.setBorrowed(false);
+
+        return SUCCESSFUL_RETURNING_MESSAGE;
     }
 
-    public void returnBook(String name) {
+    public String returnBook(String name) {
         Book selectedBook = getBook(name);
 
         selectedBook.setBorrowed(false);
+
+        return SUCCESSFUL_RETURNING_MESSAGE;
     }
 
     @Override

@@ -9,6 +9,7 @@ public class Menu {
     private final Map<Integer, String> options = new HashMap<>();
 
     public Menu() {
+        options.put(2, "Returning a book");
         options.put(1, "List of books");
         options.put(0, "Quit");
     }

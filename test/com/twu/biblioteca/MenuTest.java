@@ -28,6 +28,7 @@ public class MenuTest {
     public void shouldTransformToString() {
         assertThat("Choose between those options:\n" +
                 "0 - Quit.\n" +
-                "1 - List of books.\n", is(menu.toString()));
+                "1 - List of books.\n" +
+                "2 - Returning a book.\n", is(menu.toString()));
     }
 }

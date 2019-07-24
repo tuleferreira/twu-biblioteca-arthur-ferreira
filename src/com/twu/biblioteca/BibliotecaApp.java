@@ -26,6 +26,9 @@ public class BibliotecaApp {
                     System.out.println("Enter the ID of the book you want:");
                     System.out.println(mainLibrary.checkoutBook(scanner.nextInt()) + "\n");
                     break;
+                case "Returning a book":
+                    System.out.println("Enter the ID of the book you want to return:");
+                    System.out.println(mainLibrary.returnBook(scanner.nextInt()) + "\n");
                 case "Quit":
                     break;
                 default:

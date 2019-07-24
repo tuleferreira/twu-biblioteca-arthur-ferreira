@@ -68,13 +68,13 @@ public class LibraryTest {
     @Test
     public void shouldReturnABookSuccessfully() {
         assertTrue(testLibrary.getBook(4).isBorrowed());
-        testLibrary.returnBook(4);
+        assertThat("Thank you for returning the book", is(testLibrary.returnBook(4)));
         assertFalse(testLibrary.getBook(4).isBorrowed());
 
         testLibrary.checkoutBook("Talking to Robots : A Brief Guide to Our Human-Robot Futures");
 
         assertTrue(testLibrary.getBook("Talking to Robots : A Brief Guide to Our Human-Robot Futures").isBorrowed());
-        testLibrary.returnBook("Talking to Robots : A Brief Guide to Our Human-Robot Futures");
+        assertThat("Thank you for returning the book", is(testLibrary.returnBook("Talking to Robots : A Brief Guide to Our Human-Robot Futures")));
         assertFalse(testLibrary.getBook("Talking to Robots : A Brief Guide to Our Human-Robot Futures").isBorrowed());
 
         assertEquals(5, testLibrary.toString().split("\n").length);
