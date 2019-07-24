@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Menu {
+    final String INVALID_OPTION = "Please select a valid option!";
     private final Map<Integer, String> options = new HashMap<>();
 
     public Menu() {
@@ -15,7 +16,7 @@ public class Menu {
     }
 
     public String getOption(int key) {
-        return options.getOrDefault(key, "Please select a valid option!");
+        return options.getOrDefault(key, INVALID_OPTION);
     }
 
     @Override

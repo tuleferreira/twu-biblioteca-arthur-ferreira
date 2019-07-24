@@ -1,5 +1,8 @@
 package com.twu.biblioteca;
 
+import javafx.util.converter.NumberStringConverter;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BibliotecaApp {
@@ -13,26 +16,48 @@ public class BibliotecaApp {
         Menu mainMenu = new Menu();
 
         Scanner scanner = new Scanner(System.in);
-        String choice;
+        String choice = "";
+        String bookSelected;
 
         do {
             System.out.println(mainMenu);
 
-            choice = mainMenu.getOption(scanner.nextInt());
+            try {
+                choice = mainMenu.getOption(Integer.valueOf(scanner.nextLine()));
 
-            switch (choice) {
-                case "List of books":
-                    System.out.println(mainLibrary.toString());
-                    System.out.println("Enter the ID of the book you want:");
-                    System.out.println(mainLibrary.checkoutBook(scanner.nextInt()) + "\n");
-                    break;
-                case "Returning a book":
-                    System.out.println("Enter the ID of the book you want to return:");
-                    System.out.println(mainLibrary.returnBook(scanner.nextInt()) + "\n");
-                case "Quit":
-                    break;
-                default:
-                    System.out.println(choice);
+                switch (choice) {
+                    case "List of books":
+                        System.out.println(mainLibrary.toString());
+                        System.out.println("Enter the ID or Name of the book you want:");
+
+                        bookSelected = scanner.nextLine();
+
+                        try {
+                            System.out.println(mainLibrary.checkoutBook(Integer.valueOf(bookSelected)) + "\n");
+                        } catch (NumberFormatException e) {
+                            System.out.println(mainLibrary.checkoutBook(bookSelected) + "\n");
+                        }
+
+                        break;
+                    case "Returning a book":
+                        System.out.println("Enter the ID or Name of the book you want to return:");
+
+                        bookSelected = scanner.nextLine();
+
+                        try {
+                            System.out.println(mainLibrary.returnBook(Integer.valueOf(bookSelected)) + "\n");
+                        } catch (NumberFormatException e) {
+                            System.out.println(mainLibrary.returnBook(bookSelected) + "\n");
+                        }
+
+                        break;
+                    case "Quit":
+                        break;
+                    default:
+                        System.out.println(choice);
+                }
+            } catch (NumberFormatException e) {
+                System.out.println(mainMenu.INVALID_OPTION + "\n");
             }
         } while (!choice.equals("Quit"));
     }
