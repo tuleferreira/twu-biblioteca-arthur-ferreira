@@ -10,7 +10,7 @@ public class MenuTest {
     private Menu menu;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         menu = new Menu();
     }
 
@@ -29,6 +29,7 @@ public class MenuTest {
         assertThat("Choose between those options:\n" +
                 "0 - Quit.\n" +
                 "1 - List of books.\n" +
-                "2 - Returning a book.\n", is(menu.toString()));
+                "2 - Checkout a book.\n" +
+                "3 - Returning a book.\n", is(menu.toString()));
     }
 }

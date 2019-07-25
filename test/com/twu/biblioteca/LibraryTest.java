@@ -88,4 +88,15 @@ public class LibraryTest {
         assertThat("That is not a valid book to return.", is(testLibrary.returnBook(9)));
         assertThat("That is not a valid book to return.", is(testLibrary.returnBook("Wrong Book Title to Test Unsuccessful Message")));
     }
+
+    @Test
+    public void shouldBorrowABookWithWrongWordCase() {
+        assertThat("Thank you! Enjoy the book", is(testLibrary.checkoutBook("A GAME OF THRONES")));
+    }
+
+    @Test
+    public void shouldReturnABookWithWrongWordCase() {
+        testLibrary.checkoutBook(1);
+        assertThat("Thank you for returning the book", is(testLibrary.returnBook("A GAME OF THRONES")));
+    }
 }

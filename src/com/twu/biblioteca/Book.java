@@ -3,10 +3,10 @@ package com.twu.biblioteca;
 import java.time.LocalDate;
 
 public class Book {
-    private int id;
-    private String name;
-    private String author;
-    private LocalDate publishDate;
+    private final int id;
+    private final String name;
+    private final String author;
+    private final LocalDate publishDate;
     private boolean borrowed;
 
     public Book(int id, String name, String author, LocalDate publishDate) {
@@ -23,14 +23,6 @@ public class Book {
 
     public String getName() {
         return name;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public LocalDate getPublishDate() {
-        return publishDate;
     }
 
     public boolean isBorrowed() {

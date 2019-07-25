@@ -32,7 +32,7 @@ public class Library {
 
     public Book getBook(String name) {
         for (Book book : booksList) {
-            if (book.getName().equals(name)) {
+            if (book.getName().equalsIgnoreCase(name)) {
                 return book;
             }
         }
@@ -96,7 +96,7 @@ public class Library {
             Book book = booksList.get(i);
 
             if (!book.isBorrowed()) {
-                allBooksString += new StringBuilder(booksList.get(i).toString()).append("\n").toString();
+                allBooksString += booksList.get(i).toString() + "\n";
             }
         }
 
