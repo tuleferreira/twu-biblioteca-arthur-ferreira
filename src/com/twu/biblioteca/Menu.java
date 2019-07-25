@@ -70,12 +70,10 @@ public class Menu {
 
     @Override
     public String toString() {
-        String result = "Choose between those options:\n" +
+        return "Choose between those options:\n" +
                 options.entrySet()
                         .stream()
                         .map(e -> e.getKey() + " - " + e.getValue() + ".\n")
                         .collect(Collectors.joining());
-
-        return result;
     }
 }

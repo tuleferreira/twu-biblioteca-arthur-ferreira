@@ -20,7 +20,7 @@ public class MenuTest {
     }
 
     @Test
-    public void shouldFailWhithWrongOptionsInput() {
+    public void shouldFailWithWrongOptionsInput() {
         assertThat("Please select a valid option!", is(menu.getOption(-1)));
     }
 

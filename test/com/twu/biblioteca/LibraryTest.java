@@ -10,7 +10,7 @@ public class LibraryTest {
     private Library testLibrary;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         testLibrary = new Library();
         testLibrary.checkoutBook(4);
     }

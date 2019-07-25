@@ -14,7 +14,7 @@ public class BookTest {
 
     @Before
     public void setUp() {
-        testBook = new Book(1, "Test Title", "Test Author", LocalDate.of(1992, 04, 13));
+        testBook = new Book(1, "Test Title", "Test Author", LocalDate.of(1992, 4, 13));
     }
 
     @Test
