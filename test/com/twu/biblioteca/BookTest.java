@@ -29,12 +29,7 @@ public class BookTest {
     }
 
     @Test
-    public void shouldTransformInString() {
+    public void shouldTransformToString() {
         assertThat("|       1 | Test Title                                                            | Test Author                   | 13/04/1992 |", is(testBook.toString()));
-    }
-
-    @Test
-    public void shouldHaveBorrowedProperty() {
-        assertFalse(testBook.isBorrowed());
     }
 }

@@ -4,14 +4,14 @@ import java.time.LocalDate;
 
 public class Book {
     private final int id;
-    private final String name;
+    private final String title;
     private final String author;
     private final LocalDate publishDate;
     private boolean borrowed;
 
     public Book(int id, String name, String author, LocalDate publishDate) {
         this.id = id;
-        this.name = name;
+        this.title = name;
         this.author = author;
         this.publishDate = publishDate;
         this.borrowed = false;
@@ -21,8 +21,8 @@ public class Book {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public boolean isBorrowed() {
@@ -35,6 +35,6 @@ public class Book {
 
     @Override
     public String toString() {
-        return String.format("| %7s | %-70s| %-30s| %02d/%02d/%s |", id, name, author, publishDate.getDayOfMonth(), publishDate.getMonthValue(), publishDate.getYear());
+        return String.format("| %7s | %-70s| %-30s| %02d/%02d/%s |", id, title, author, publishDate.getDayOfMonth(), publishDate.getMonthValue(), publishDate.getYear());
     }
 }
