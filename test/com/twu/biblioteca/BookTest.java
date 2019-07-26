@@ -18,6 +18,17 @@ public class BookTest {
     }
 
     @Test
+    public void shouldStartWithBorrowedFalse() {
+        assertFalse(testBook.isBorrowed());
+    }
+
+    @Test
+    public void setBorrowed() {
+        testBook.setBorrowed(true);
+        assertTrue(testBook.isBorrowed());
+    }
+
+    @Test
     public void shouldTransformInString() {
         assertThat("|       1 | Test Title                                                            | Test Author                   | 13/04/1992 |", is(testBook.toString()));
     }

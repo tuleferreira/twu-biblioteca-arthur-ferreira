@@ -15,11 +15,6 @@ public class Library {
             new Book(3, "Harry Potter and the Prisoner of Azkaban", "J.K. Rowling", LocalDate.of(1999, 7, 8)),
             new Book(4, "Talking to Robots : A Brief Guide to Our Human-Robot Futures", "David Ewing Duncan", LocalDate.of(2019, 7, 16)));
 
-
-    public List<Book> getBooksList() {
-        return booksList;
-    }
-
     public Book getBook(int id) {
         for (Book book : booksList) {
             if (book.getId() == id) {
@@ -90,16 +85,14 @@ public class Library {
 
     @Override
     public String toString() {
-        String allBooksString = String.format("| %7s | %-70s| %-30s| %-10s |\n", "ID", "BOOK", "AUTHOR", "PUBLISHED");
+        StringBuilder allBooksString = new StringBuilder(String.format("| %7s | %-70s| %-30s| %-10s |\n", "ID", "BOOK", "AUTHOR", "PUBLISHED"));
 
-        for (int i = 0; i < booksList.size(); i++) {
-            Book book = booksList.get(i);
-
+        for (Book book : booksList) {
             if (!book.isBorrowed()) {
-                allBooksString += booksList.get(i).toString() + "\n";
+                allBooksString.append(book).append("\n");
             }
         }
 
-        return allBooksString;
+        return allBooksString.toString();
     }
 }

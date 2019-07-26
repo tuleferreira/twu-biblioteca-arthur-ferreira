@@ -36,9 +36,9 @@ public class Menu {
 
                         terminalInput = scanner.nextLine();
 
-                        try {
+                        if (terminalInput.matches("\\d+")) {
                             System.out.println(mainLibrary.checkoutBook(Integer.valueOf(terminalInput)) + "\n");
-                        } catch (NumberFormatException e) {
+                        } else {
                             System.out.println(mainLibrary.checkoutBook(terminalInput) + "\n");
                         }
                         break;
@@ -47,9 +47,9 @@ public class Menu {
 
                         terminalInput = scanner.nextLine();
 
-                        try {
+                        if (terminalInput.matches("\\d+")) {
                             System.out.println(mainLibrary.returnBook(Integer.valueOf(terminalInput)) + "\n");
-                        } catch (NumberFormatException e) {
+                        } else {
                             System.out.println(mainLibrary.returnBook(terminalInput) + "\n");
                         }
                         break;

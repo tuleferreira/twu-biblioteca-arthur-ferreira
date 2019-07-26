@@ -16,11 +16,6 @@ public class LibraryTest {
     }
 
     @Test
-    public void shouldContainAddedBooks() {
-        assertEquals(4, testLibrary.getBooksList().size());
-    }
-
-    @Test
     public void shouldShowBooks() {
         assertEquals(4, testLibrary.toString().split("\n").length);
     }
