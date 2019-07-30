@@ -15,27 +15,11 @@ public class BibliotecaApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        String libraryNumberInput;
-        String passwordInput;
-        boolean connected;
-
-        do {
-            System.out.println("Library Number:");
-            libraryNumberInput = scanner.nextLine();
-
-            System.out.println("Password:");
-            passwordInput = scanner.nextLine();
-
-            connected = users.login(libraryNumberInput, passwordInput);
-        } while (!connected);
-
-        libraryNumberConnected = libraryNumberInput;
-
+        users.startLogin(scanner);
 
         MainMenu mainMenu = new MainMenu();
         mainMenu.addSection(new BooksSection("Book", "Library"));
         mainMenu.addSection(new MoviesSection("Movie", "Movies Section"));
-
 
         System.out.println("\n" + WELCOME_MESSAGE + "\n");
         mainMenu.start(scanner);
