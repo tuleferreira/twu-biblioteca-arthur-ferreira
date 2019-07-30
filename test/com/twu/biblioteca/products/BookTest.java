@@ -35,16 +35,16 @@ public class BookTest {
     @Test
     public void setBorrowedBy() {
         testBook.setBorrowedBy("123-4567");
-        assertThat("123-4567", is(testBook.getBorrowedBy()));
+        assertThat(testBook.getBorrowedBy(), is("123-4567"));
     }
 
     @Test
     public void formatProductShowHeader() {
-        assertThat("|      ID | BOOK                                                                  | AUTHOR                        | PUBLISHED  |", is(testBook.getProductShowHeader()));
+        assertThat(testBook.getProductShowHeader(), is("|      ID | BOOK                                                                  | AUTHOR                        | PUBLISHED  |"));
     }
 
     @Test
     public void toStringTest() {
-        assertThat("|       1 | Test Title                                                            | Test Author                   | 13/04/1992 |", is(testBook.toString()));
+        assertThat(testBook.toString(), is("|       1 | Test Title                                                            | Test Author                   | 13/04/1992 |"));
     }
 }

@@ -29,32 +29,32 @@ public class SectionTest {
 
     @Test
     public void shouldGetAProductByNameOrID() {
-        assertNotNull(is(testSection.getProduct("Thoughts of Dog 2019-2020 16-Month Weekly/Monthly Diary")));
-        assertNotNull(is(testSection.getProduct(3)));
+        assertNotNull(testSection.getProduct("Thoughts of Dog 2019-2020 16-Month Weekly/Monthly Diary"));
+        assertNotNull(testSection.getProduct(3));
     }
 
     @Test
     public void shouldCheckoutAProductByNameOrID() {
         testSection.checkoutProduct(1);
         assertTrue(testSection.getProduct(1).isBorrowed());
-        assertThat("472-6231", is(testSection.getProduct(1).getBorrowedBy()));
+        assertThat(testSection.getProduct(1).getBorrowedBy(), is("472-6231"));
 
         testSection.checkoutProduct("Thoughts of Dog 2019-2020 16-Month Weekly/Monthly Diary");
         assertTrue(testSection.getProduct("Thoughts of Dog 2019-2020 16-Month Weekly/Monthly Diary").isBorrowed());
-        assertThat("472-6231", is(testSection.getProduct("Thoughts of Dog 2019-2020 16-Month Weekly/Monthly Diary").getBorrowedBy()));
+        assertThat(testSection.getProduct("Thoughts of Dog 2019-2020 16-Month Weekly/Monthly Diary").getBorrowedBy(), is("472-6231"));
     }
 
     @Test
     public void shouldTestSuccessfulCheckoutMessages() {
-        assertThat("Thank you! Enjoy the test item.", is(testSection.checkoutProduct(1)));
-        assertThat("Thank you! Enjoy the test item.", is(testSection.checkoutProduct("Harry Potter and the Prisoner of Azkaban")));
+        assertThat(testSection.checkoutProduct(1), is("Thank you! Enjoy the test item."));
+        assertThat(testSection.checkoutProduct("Harry Potter and the Prisoner of Azkaban"), is("Thank you! Enjoy the test item."));
     }
 
     @Test
     public void shouldTestUnsuccessfulCheckoutMessages() {
-        assertThat("Sorry, that test item is not available.", is(testSection.checkoutProduct(4)));
-        assertThat("Sorry, that test item is not available.", is(testSection.checkoutProduct(123)));
-        assertThat("Sorry, that test item is not available.", is(testSection.checkoutProduct("Harry Peterson")));
+        assertThat(testSection.checkoutProduct(4), is("Sorry, that test item is not available."));
+        assertThat(testSection.checkoutProduct(123), is("Sorry, that test item is not available."));
+        assertThat(testSection.checkoutProduct("Harry Peterson"), is("Sorry, that test item is not available."));
     }
 
     @Test
@@ -71,13 +71,13 @@ public class SectionTest {
 
     @Test
     public void shouldTestSuccessfulReturningMessages() {
-        assertThat("Thank you for returning the test item.", is(testSection.returnProduct(4)));
+        assertThat(testSection.returnProduct(4), is("Thank you for returning the test item."));
     }
 
     @Test
     public void shouldTestUnsuccessfulReturningMessages() {
-        assertThat("That is not a valid test item to return.", is(testSection.returnProduct(91231)));
-        assertThat("That is not a valid test item to return.", is(testSection.returnProduct("Wrong Product Title to Test Unsuccessful Message")));
+        assertThat(testSection.returnProduct(91231), is("That is not a valid test item to return."));
+        assertThat(testSection.returnProduct("Wrong Product Title to Test Unsuccessful Message"), is("That is not a valid test item to return."));
     }
 
     @Test
@@ -94,24 +94,25 @@ public class SectionTest {
 
     @Test
     public void subMenuShouldFailWithWrongOptionsInput() {
-        assertThat("Please select a valid option!", is(testSection.getMenu().getOption(-1)));
+        assertThat(testSection.getMenu().getOption(-1), is("Please select a valid option!"));
     }
 
     @Test
     public void testBorrowedByUserToString() {
-        assertThat("|      ID | BOOK                                                                  | AUTHOR                        | PUBLISHED  |\n" +
-                "|       4 | Talking to Robots : A Brief Guide to Our Human-Robot Futures          | David Ewing Duncan            | 16/07/2019 |\n", is(testSection.toString(BibliotecaApp.libraryNumberConnected)));
+        assertThat(testSection.toString(BibliotecaApp.libraryNumberConnected),
+                is("|      ID | BOOK                                                                  | AUTHOR                        | PUBLISHED  |\n" +
+                        "|       4 | Talking to Robots : A Brief Guide to Our Human-Robot Futures          | David Ewing Duncan            | 16/07/2019 |\n"));
 
         testSection.returnProduct(4);
-        assertThat( "Test Section: You have nothing borrowed\n", is(testSection.toString(BibliotecaApp.libraryNumberConnected)));
+        assertThat(testSection.toString(BibliotecaApp.libraryNumberConnected), is("Test Section: You have nothing borrowed\n"));
     }
 
     @Test
     public void subMenuToString() {
-        assertThat("Choose between those options:\n" +
+        assertThat(testSection.getMenu().toString(), is("Choose between those options:\n" +
                 "0 - Go back.\n" +
                 "1 - List all test items.\n" +
                 "2 - Checkout test item.\n" +
-                "3 - Returning test item.\n", is(testSection.getMenu().toString()));
+                "3 - Returning test item.\n"));
     }
 }

@@ -3,12 +3,14 @@ package com.twu.biblioteca.users;
 public class User {
     private String name;
     private String email;
+    private String phone;
     private String libraryNumber;
     private String password;
 
-    public User(String name, String email, String libraryNumber, String password) {
+    public User(String name, String email, String phone, String libraryNumber, String password) {
         this.name = name;
         this.email = email;
+        this.phone = phone;
         this.libraryNumber = libraryNumber;
         this.password = password;
     }
@@ -19,6 +21,10 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 
     public String getLibraryNumber() {
@@ -35,5 +41,13 @@ public class User {
 
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "LN - " + libraryNumber + "\n" +
+                "Name: " + name + "\n" +
+                "Email: " + email + "\n" +
+                "Phone: " + phone;
     }
 }

@@ -24,26 +24,32 @@ public class MainMenuTest {
     }
 
     @Test
+    public void shouldHaveViewInformationOption() {
+        assertThat(menu.getOption(1), is("View my information"));
+    }
+
+    @Test
     public void shouldHaveViewChekedOutOption() {
-        assertThat("View checked out list", is(menu.getOption(1)));
+        assertThat(menu.getOption(2), is("View checked out list"));
     }
 
     @Test
     public void shouldIndexOptionsByIntegerValue() {
-        assertThat("Library", is(menu.getOption(2)));
+        assertThat(menu.getOption(3), is("Library"));
     }
 
     @Test
     public void shouldFailWithWrongOptionsInput() {
-        assertThat("Please select a valid option!", is(menu.getOption(-1)));
+        assertThat(menu.getOption(-1), is("Please select a valid option!"));
     }
 
     @Test
     public void shouldTransformToString() {
-        assertThat("Choose between those options:\n" +
+        assertThat(menu.toString(), is("Choose between those options:\n" +
                 "0 - Quit.\n" +
-                "1 - View checked out list.\n" +
-                "2 - Library.\n" +
-                "3 - Movies Section.\n", is(menu.toString()));
+                "1 - View my information.\n" +
+                "2 - View checked out list.\n" +
+                "3 - Library.\n" +
+                "4 - Movies Section.\n"));
     }
 }

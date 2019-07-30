@@ -9,7 +9,7 @@ public class Users {
     public Users() {
         userList = new ArrayList<>();
 
-        User user = new User("Arthur", "test@twu.com", "472-6231", "pass123");
+        User user = new User("Arthur", "test@twu.com","(51) 11111-2222", "472-6231", "pass123");
         userList.add(user);
     }
 

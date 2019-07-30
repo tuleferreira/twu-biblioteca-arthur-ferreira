@@ -18,11 +18,11 @@ public class MovieTest {
 
     @Test
     public void shouldCheckProperties() {
-        assertThat(1, is(testMovie.getId()));
-        assertThat("Test Title Movie", is(testMovie.getTitle()));
-        assertThat(1972, is(testMovie.getYearPublished()));
-        assertThat("Test Director", is(testMovie.getDirector()));
-        assertThat("1", is(testMovie.parseRating()));
+        assertThat(testMovie.getId(), is(1));
+        assertThat(testMovie.getTitle(), is("Test Title Movie"));
+        assertThat(testMovie.getYearPublished(), is(1972));
+        assertThat(testMovie.getDirector(), is("Test Director"));
+        assertThat(testMovie.parseRating(), is("1"));
         assertFalse(testMovie.isBorrowed());
     }
 
@@ -34,12 +34,12 @@ public class MovieTest {
 
     @Test
     public void formatProductShowHeader() {
-        assertThat("|       1 | Test Title Movie                                                      | Test Director                 | 1972         |       1 |", is(testMovie.toString()));
+        assertThat(testMovie.toString(), is("|       1 | Test Title Movie                                                      | Test Director                 | 1972         |       1 |"));
     }
 
     @Test
     public void canBeUnrated() {
         Movie testMovie2 = new Movie(1, "Test Title Movie", 1972, "Test Director");
-        assertThat("Unrated", is(testMovie2.parseRating()));
+        assertThat(testMovie2.parseRating(), is("Unrated"));
     }
 }

@@ -15,7 +15,8 @@ public class MainMenu implements Menu {
         sectionsList = new ArrayList<>();
 
         options.put(0, "Quit");
-        options.put(1, "View checked out list");
+        options.put(1, "View my information");
+        options.put(2, "View checked out list");
     }
 
     @Override
@@ -38,7 +39,9 @@ public class MainMenu implements Menu {
 
                 if (terminalInput.equals(getOption(0))) {
                     break;
-                } else if (terminalInput.equals(getOption(1))) {
+                } else if(terminalInput.equals(getOption(1))) {
+                    System.out.println(BibliotecaApp.users.getUser(BibliotecaApp.libraryNumberConnected) + "\n");
+                } else if (terminalInput.equals(getOption(2))) {
                     String borrowedList;
 
                     for (Section section : sectionsList) {
