@@ -8,6 +8,7 @@ public class Movie implements Product {
     private final int rating;
     private final String productShowHeader;
     private boolean borrowed;
+    private String borrowedBy;
 
     public Movie(int id, String title, int yearPublished, String director) {
         this(id, title, yearPublished, director, -1);
@@ -51,6 +52,11 @@ public class Movie implements Product {
     }
 
     @Override
+    public String getBorrowedBy() {
+        return borrowedBy;
+    }
+
+    @Override
     public String getProductShowHeader() {
         return productShowHeader;
     }
@@ -58,6 +64,11 @@ public class Movie implements Product {
     @Override
     public void setBorrowed(boolean borrowed) {
         this.borrowed = borrowed;
+    }
+
+    @Override
+    public void setBorrowedBy(String libraryNumber) {
+        this.borrowedBy = libraryNumber;
     }
 
     @Override

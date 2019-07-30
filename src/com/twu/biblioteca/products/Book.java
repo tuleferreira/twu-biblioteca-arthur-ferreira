@@ -9,6 +9,7 @@ public class Book implements Product {
     private final LocalDate publishDate;
     private final String productShowHeader;
     private boolean borrowed;
+    private String borrowedBy;
 
     public Book(int id, String title, String author, int yearPublished, int monthPublished, int dayPublished) {
         this.id = id;
@@ -43,6 +44,11 @@ public class Book implements Product {
     }
 
     @Override
+    public String getBorrowedBy() {
+        return borrowedBy;
+    }
+
+    @Override
     public String getProductShowHeader() {
         return productShowHeader;
     }
@@ -50,6 +56,11 @@ public class Book implements Product {
     @Override
     public void setBorrowed(boolean borrowed) {
         this.borrowed = borrowed;
+    }
+
+    @Override
+    public void setBorrowedBy(String libraryNumber) {
+        this.borrowedBy = libraryNumber;
     }
 
     @Override

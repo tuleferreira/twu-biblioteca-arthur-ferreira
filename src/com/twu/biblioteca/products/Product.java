@@ -9,7 +9,11 @@ public interface Product {
 
     boolean isBorrowed();
 
+    String getBorrowedBy();
+
     void setBorrowed(boolean borrowed);
+
+    void setBorrowedBy(String libraryNumber);
 
     String toString();
 }

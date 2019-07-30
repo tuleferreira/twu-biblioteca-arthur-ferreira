@@ -1,5 +1,6 @@
 package com.twu.biblioteca.sections;
 
+import com.twu.biblioteca.BibliotecaApp;
 import com.twu.biblioteca.menus.Menu;
 import com.twu.biblioteca.menus.SubMenu;
 import com.twu.biblioteca.products.Product;
@@ -83,6 +84,7 @@ public class Section {
         }
 
         product.setBorrowed(true);
+        product.setBorrowedBy(BibliotecaApp.libraryNumberConnected);
 
         return SUCCESSFUL_CHECKOUT_MESSAGE;
     }
@@ -95,6 +97,7 @@ public class Section {
         }
 
         product.setBorrowed(true);
+        product.setBorrowedBy(BibliotecaApp.libraryNumberConnected);
 
         return SUCCESSFUL_CHECKOUT_MESSAGE;
     }
@@ -107,6 +110,7 @@ public class Section {
         }
 
         product.setBorrowed(false);
+        product.setBorrowedBy(null);
 
         return SUCCESSFUL_RETURNING_MESSAGE;
     }
@@ -119,8 +123,25 @@ public class Section {
         }
 
         product.setBorrowed(false);
+        product.setBorrowedBy(null);
 
         return SUCCESSFUL_RETURNING_MESSAGE;
+    }
+
+    public String toString(String libraryNumber) {
+        StringBuilder borrowedBooksString = new StringBuilder(productsList.get(0).getProductShowHeader()).append("\n");
+
+        for (Product product : productsList) {
+            if (product.getBorrowedBy() != null && product.getBorrowedBy().equals(libraryNumber)) {
+                borrowedBooksString.append(product).append("\n");
+            }
+        }
+
+        if (borrowedBooksString.toString().split("\n").length == 1) {
+            return sectionName + ": You have nothing borrowed\n";
+        }
+
+        return borrowedBooksString.toString();
     }
 
     @Override
@@ -135,6 +156,4 @@ public class Section {
 
         return allBooksString.toString();
     }
-
-    ;
 }

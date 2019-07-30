@@ -24,8 +24,13 @@ public class MainMenuTest {
     }
 
     @Test
+    public void shouldHaveViewChekedOutOption() {
+        assertThat("View checked out list", is(menu.getOption(1)));
+    }
+
+    @Test
     public void shouldIndexOptionsByIntegerValue() {
-        assertThat("Library", is(menu.getOption(1)));
+        assertThat("Library", is(menu.getOption(2)));
     }
 
     @Test
@@ -37,7 +42,8 @@ public class MainMenuTest {
     public void shouldTransformToString() {
         assertThat("Choose between those options:\n" +
                 "0 - Quit.\n" +
-                "1 - Library.\n" +
-                "2 - Movies Section.\n", is(menu.toString()));
+                "1 - View checked out list.\n" +
+                "2 - Library.\n" +
+                "3 - Movies Section.\n", is(menu.toString()));
     }
 }

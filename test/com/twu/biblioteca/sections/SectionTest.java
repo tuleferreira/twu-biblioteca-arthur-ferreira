@@ -1,5 +1,6 @@
 package com.twu.biblioteca.sections;
 
+import com.twu.biblioteca.BibliotecaApp;
 import com.twu.biblioteca.products.Book;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +23,7 @@ public class SectionTest {
                 new Book(3, "Harry Potter and the Prisoner of Azkaban", "J.K. Rowling", 1999, 7, 8),
                 new Book(4, "Talking to Robots : A Brief Guide to Our Human-Robot Futures", "David Ewing Duncan", 2019, 7, 16)));
 
+        BibliotecaApp.libraryNumberConnected = "472-6231";
         testSection.checkoutProduct(4);
     }
 
@@ -35,9 +37,11 @@ public class SectionTest {
     public void shouldCheckoutAProductByNameOrID() {
         testSection.checkoutProduct(1);
         assertTrue(testSection.getProduct(1).isBorrowed());
+        assertThat("472-6231", is(testSection.getProduct(1).getBorrowedBy()));
 
         testSection.checkoutProduct("Thoughts of Dog 2019-2020 16-Month Weekly/Monthly Diary");
         assertTrue(testSection.getProduct("Thoughts of Dog 2019-2020 16-Month Weekly/Monthly Diary").isBorrowed());
+        assertThat("472-6231", is(testSection.getProduct("Thoughts of Dog 2019-2020 16-Month Weekly/Monthly Diary").getBorrowedBy()));
     }
 
     @Test
@@ -57,10 +61,12 @@ public class SectionTest {
     public void shouldReturnAProductByNameOrID() {
         testSection.returnProduct(4);
         assertFalse(testSection.getProduct(4).isBorrowed());
+        assertNull(testSection.getProduct(4).getBorrowedBy());
 
         testSection.checkoutProduct("Talking to Robots : A Brief Guide to Our Human-Robot Futures");
         testSection.returnProduct("Talking to Robots : A Brief Guide to Our Human-Robot Futures");
         assertFalse(testSection.getProduct("Talking to Robots : A Brief Guide to Our Human-Robot Futures").isBorrowed());
+        assertNull(testSection.getProduct("Talking to Robots : A Brief Guide to Our Human-Robot Futures").getBorrowedBy());
     }
 
     @Test
@@ -89,6 +95,15 @@ public class SectionTest {
     @Test
     public void subMenuShouldFailWithWrongOptionsInput() {
         assertThat("Please select a valid option!", is(testSection.getMenu().getOption(-1)));
+    }
+
+    @Test
+    public void testBorrowedByUserToString() {
+        assertThat("|      ID | BOOK                                                                  | AUTHOR                        | PUBLISHED  |\n" +
+                "|       4 | Talking to Robots : A Brief Guide to Our Human-Robot Futures          | David Ewing Duncan            | 16/07/2019 |\n", is(testSection.toString(BibliotecaApp.libraryNumberConnected)));
+
+        testSection.returnProduct(4);
+        assertThat( "Test Section: You have nothing borrowed\n", is(testSection.toString(BibliotecaApp.libraryNumberConnected)));
     }
 
     @Test

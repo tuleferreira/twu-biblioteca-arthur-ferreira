@@ -1,5 +1,6 @@
 package com.twu.biblioteca.menus;
 
+import com.twu.biblioteca.BibliotecaApp;
 import com.twu.biblioteca.sections.Section;
 
 import java.util.*;
@@ -14,6 +15,7 @@ public class MainMenu implements Menu {
         sectionsList = new ArrayList<>();
 
         options.put(0, "Quit");
+        options.put(1, "View checked out list");
     }
 
     @Override
@@ -36,6 +38,16 @@ public class MainMenu implements Menu {
 
                 if (terminalInput.equals(getOption(0))) {
                     break;
+                } else if (terminalInput.equals(getOption(1))) {
+                    String borrowedList;
+
+                    for (Section section : sectionsList) {
+                        borrowedList = section.toString(BibliotecaApp.libraryNumberConnected);
+
+                        if (borrowedList != null) {
+                           System.out.println(borrowedList);
+                        }
+                    }
                 } else if (!validOptionInput) {
                     System.out.println(terminalInput);
                 }
@@ -54,7 +66,7 @@ public class MainMenu implements Menu {
 
     public void addSection(Section section) {
         sectionsList.add(section);
-        options.put(sectionsList.size(), section.getSectionName());
+        options.put(options.size(), section.getSectionName());
     }
 
     @Override
