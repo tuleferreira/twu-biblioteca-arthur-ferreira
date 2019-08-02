@@ -3,6 +3,7 @@ package com.twu.biblioteca.menus;
 import com.twu.biblioteca.sections.BooksSection;
 import com.twu.biblioteca.sections.MoviesSection;
 import com.twu.biblioteca.sections.Section;
+import com.twu.biblioteca.users.User;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ public class MainMenuTest {
         Section booksSection = new BooksSection("Book", "Library");
         Section moviesSection = new MoviesSection("Movie", "Movies Section");
 
-        menu = new MainMenu();
+        menu = new MainMenu(new User("A", "a@a", "999", "123900", "abc"));
 
         menu.addSection(booksSection);
         menu.addSection(moviesSection);

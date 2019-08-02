@@ -2,6 +2,7 @@ package com.twu.biblioteca.menus;
 
 import com.twu.biblioteca.BibliotecaApp;
 import com.twu.biblioteca.sections.Section;
+import com.twu.biblioteca.users.User;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -9,8 +10,11 @@ import java.util.stream.Collectors;
 public class MainMenu implements Menu {
     private Map<Integer, String> options;
     private List<Section> sectionsList;
+    private User loggedInUser;
 
-    public MainMenu() {
+    public MainMenu(User loggedInUser) {
+        this.loggedInUser = loggedInUser;
+
         options = new HashMap<>();
         sectionsList = new ArrayList<>();
 
@@ -39,8 +43,8 @@ public class MainMenu implements Menu {
 
                 if (terminalInput.equals(getOption(0))) {
                     break;
-                } else if(terminalInput.equals(getOption(1))) {
-                    System.out.println(BibliotecaApp.users.getUser(BibliotecaApp.libraryNumberConnected) + "\n");
+                } else if (terminalInput.equals(getOption(1))) {
+                    System.out.println(loggedInUser + "\n");
                 } else if (terminalInput.equals(getOption(2))) {
                     String borrowedList;
 
@@ -48,7 +52,7 @@ public class MainMenu implements Menu {
                         borrowedList = section.toString(BibliotecaApp.libraryNumberConnected);
 
                         if (borrowedList != null) {
-                           System.out.println(borrowedList);
+                            System.out.println(borrowedList);
                         }
                     }
                 } else if (!validOptionInput) {
@@ -75,9 +79,9 @@ public class MainMenu implements Menu {
     @Override
     public String toString() {
         return "Choose between those options:\n" +
-                options.entrySet()
-                        .stream()
-                        .map(e -> e.getKey() + " - " + e.getValue() + ".\n")
-                        .collect(Collectors.joining());
+            options.entrySet()
+                .stream()
+                .map(e -> e.getKey() + " - " + e.getValue() + ".\n")
+                .collect(Collectors.joining());
     }
 }

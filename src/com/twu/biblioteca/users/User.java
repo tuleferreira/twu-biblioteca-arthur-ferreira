@@ -31,6 +31,7 @@ public class User {
         return libraryNumber;
     }
 
+    // TODO: Rename to passwordMatches
     public boolean loginAuthentication(String password) {
         boolean passwordCheck = this.password.equals(password);
 
