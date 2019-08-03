@@ -1,20 +1,16 @@
 package com.twu.biblioteca.menus;
 
 import com.twu.biblioteca.sections.Section;
+import com.twu.biblioteca.users.User;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
-public class SubMenu implements Menu {
-    private final Map<Integer, String> options;
+public class SectionMenu extends Menu {
+    private final String PRODUCT_SELECTION_MESSAGE = "Enter the ID or the name:";
     private final Section section;
 
-    public SubMenu(Section section) {
+    public SectionMenu(Section section) {
         this.section = section;
-
-        options = new HashMap<>();
 
         String productName = section.getProductName().toLowerCase();
         options.put(0, "Go back");
@@ -23,8 +19,7 @@ public class SubMenu implements Menu {
         options.put(3, "Returning " + productName);
     }
 
-    @Override
-    public final void start(Scanner scanner) {
+    public final void start(Scanner scanner, User loggedInUser) {
         String terminalInput = "";
 
         do {
@@ -46,9 +41,9 @@ public class SubMenu implements Menu {
                         terminalInput = scanner.nextLine();
 
                         if (terminalInput.matches("\\d+")) {
-                            System.out.println(section.checkoutProduct(Integer.valueOf(terminalInput)) + "\n");
+                            System.out.println(section.checkoutProduct(Integer.valueOf(terminalInput), loggedInUser.getLibraryNumber()) + "\n");
                         } else {
-                            System.out.println(section.checkoutProduct(terminalInput) + "\n");
+                            System.out.println(section.checkoutProduct(terminalInput, loggedInUser.getLibraryNumber()) + "\n");
                         }
                     } else if (terminalInput.contains("Returning")) {
                         terminalInput = scanner.nextLine();
@@ -64,19 +59,5 @@ public class SubMenu implements Menu {
                 System.out.println(INVALID_OPTION + "\n");
             }
         } while (!terminalInput.equals(getOption(0)));
-    }
-
-    @Override
-    public String getOption(int key) {
-        return options.getOrDefault(key, INVALID_OPTION);
-    }
-
-    @Override
-    public String toString() {
-        return "Choose between those options:\n" +
-                options.entrySet()
-                        .stream()
-                        .map(e -> e.getKey() + " - " + e.getValue() + ".\n")
-                        .collect(Collectors.joining());
     }
 }

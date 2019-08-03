@@ -1,17 +1,18 @@
 package com.twu.biblioteca.menus;
 
-import com.twu.biblioteca.BibliotecaApp;
 import com.twu.biblioteca.sections.Section;
+import com.twu.biblioteca.users.User;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class MainMenu implements Menu {
-    private Map<Integer, String> options;
+public class MainMenu extends Menu {
+    protected final String WELCOME_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore";
     private List<Section> sectionsList;
+    private User loggedInUser;
 
-    public MainMenu() {
-        options = new HashMap<>();
+    public MainMenu(User loggedInUser) {
+        this.loggedInUser = loggedInUser;
+
         sectionsList = new ArrayList<>();
 
         options.put(0, "Quit");
@@ -19,8 +20,9 @@ public class MainMenu implements Menu {
         options.put(2, "View checked out list");
     }
 
-    @Override
     public final void start(Scanner scanner) {
+        System.out.println("\n" + WELCOME_MESSAGE + "\n");
+
         String terminalInput = "";
 
         do {
@@ -32,23 +34,23 @@ public class MainMenu implements Menu {
 
                 for (Section section : sectionsList) {
                     if (terminalInput.equals(section.getSectionName())) {
-                        section.getMenu().start(scanner);
+                        section.getMenu().start(scanner, loggedInUser);
                         validOptionInput = true;
                     }
                 }
 
                 if (terminalInput.equals(getOption(0))) {
                     break;
-                } else if(terminalInput.equals(getOption(1))) {
-                    System.out.println(BibliotecaApp.users.getUser(BibliotecaApp.libraryNumberConnected) + "\n");
+                } else if (terminalInput.equals(getOption(1))) {
+                    System.out.println(loggedInUser + "\n");
                 } else if (terminalInput.equals(getOption(2))) {
                     String borrowedList;
 
                     for (Section section : sectionsList) {
-                        borrowedList = section.toString(BibliotecaApp.libraryNumberConnected);
+                        borrowedList = section.getBorrowedListByLibraryNumber(loggedInUser.getLibraryNumber());
 
                         if (borrowedList != null) {
-                           System.out.println(borrowedList);
+                            System.out.println(borrowedList + "\n");
                         }
                     }
                 } else if (!validOptionInput) {
@@ -62,22 +64,9 @@ public class MainMenu implements Menu {
         scanner.close();
     }
 
-    @Override
-    public String getOption(int key) {
-        return options.getOrDefault(key, INVALID_OPTION);
-    }
-
     public void addSection(Section section) {
         sectionsList.add(section);
         options.put(options.size(), section.getSectionName());
     }
 
-    @Override
-    public String toString() {
-        return "Choose between those options:\n" +
-                options.entrySet()
-                        .stream()
-                        .map(e -> e.getKey() + " - " + e.getValue() + ".\n")
-                        .collect(Collectors.joining());
-    }
 }

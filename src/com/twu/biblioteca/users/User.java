@@ -15,27 +15,15 @@ public class User {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
     public String getLibraryNumber() {
         return libraryNumber;
     }
 
-    public boolean loginAuthentication(String password) {
+    public boolean passwordMatches(String password) {
         boolean passwordCheck = this.password.equals(password);
 
         if (!passwordCheck) {
-            System.out.println("Incorrect password.");
+            System.out.println("Incorrect password.\n");
             return false;
         }
 

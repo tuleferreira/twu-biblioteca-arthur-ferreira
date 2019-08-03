@@ -1,19 +1,39 @@
 package com.twu.biblioteca.products;
 
-public interface Product {
-    int getId();
+public class Product {
+    private final int id;
+    private final String title;
+    private final String productShowHeader;
+    private String borrowedBy;
 
-    String getTitle();
+    public Product(int id, String title, String productShowHeader) {
+        this.id = id;
+        this.title = title;
+        this.productShowHeader = productShowHeader;
+        this.borrowedBy = null;
+    }
 
-    String getProductShowHeader();
+    public boolean isBorrowed() {
+        return borrowedBy != null;
+    }
 
-    boolean isBorrowed();
+    public int getId() {
+        return id;
+    }
 
-    String getBorrowedBy();
+    public String getTitle() {
+        return title;
+    }
 
-    void setBorrowed(boolean borrowed);
+    public String getProductShowHeader() {
+        return productShowHeader;
+    }
 
-    void setBorrowedBy(String libraryNumber);
+    public String getBorrowedBy() {
+        return borrowedBy;
+    }
 
-    String toString();
+    public void setBorrowedBy(String libraryNumber) {
+        this.borrowedBy = libraryNumber;
+    }
 }

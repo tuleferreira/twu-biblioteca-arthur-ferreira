@@ -15,25 +15,13 @@ public class UserTest {
     }
 
     @Test
-    public void checkProperties() {
-        assertThat(user.getName(), is("Name"));
-        assertThat(user.getEmail(), is("test@gmail.com"));
-        assertThat(user.getPhone(), is("(51) 11111-2222"));
-        assertThat(user.getLibraryNumber(), is("123-4567"));
+    public void checkPasswordMatches() {
+        assertTrue(user.passwordMatches("testpass123"));
+        assertFalse(user.passwordMatches("wrongpass"));
     }
 
     @Test
-    public void shouldAuthenticate() {
-        assertTrue(user.loginAuthentication("testpass123"));
-    }
-
-    @Test
-    public void shouldFailAuthentication() {
-        assertFalse(user.loginAuthentication("wrongpass"));
-    }
-
-    @Test
-    public void toStringTest() {
+    public void checkToString() {
         assertThat(user.toString(), is("LN - 123-4567\n" +
                 "Name: Name\n" +
                 "Email: test@gmail.com\n" +

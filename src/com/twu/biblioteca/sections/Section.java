@@ -1,33 +1,22 @@
 package com.twu.biblioteca.sections;
 
-import com.twu.biblioteca.BibliotecaApp;
-import com.twu.biblioteca.menus.Menu;
-import com.twu.biblioteca.menus.SubMenu;
+import com.twu.biblioteca.menus.SectionMenu;
 import com.twu.biblioteca.products.Product;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Section {
     private String productName;
     private String sectionName;
-    private final String SUCCESSFUL_CHECKOUT_MESSAGE;
-    private final String UNSUCCESSFUL_CHECKOUT_MESSAGE;
-    private final String SUCCESSFUL_RETURNING_MESSAGE;
-    private final String UNSUCCESSFUL_RETURNING_MESSAGE;
-    List<Product> productsList = new ArrayList<>();
-    private final Menu menu;
+    private final List<Product> productsList;
+    private final SectionMenu menu;
 
-    public Section(String productName, String sectionName) {
+    public Section(String productName, String sectionName, List<Product> productsList) {
         this.productName = productName.toLowerCase();
         this.sectionName = sectionName;
+        this.productsList = productsList;
 
-        this.SUCCESSFUL_CHECKOUT_MESSAGE = "Thank you! Enjoy the " + this.productName + ".";
-        this.UNSUCCESSFUL_CHECKOUT_MESSAGE = "Sorry, that " + this.productName + " is not available.";
-        this.SUCCESSFUL_RETURNING_MESSAGE = "Thank you for returning the " + this.productName + ".";
-        this.UNSUCCESSFUL_RETURNING_MESSAGE = "That is not a valid " + this.productName + " to return.";
-
-        menu = new SubMenu(this);
+        menu = new SectionMenu(this);
     }
 
     public String getProductName() {
@@ -38,20 +27,8 @@ public class Section {
         return sectionName;
     }
 
-    public Menu getMenu() {
+    public SectionMenu getMenu() {
         return menu;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public void setSectionName(String sectionName) {
-        this.sectionName = sectionName;
-    }
-
-    void setProductsList(List<Product> productsList) {
-        this.productsList = productsList;
     }
 
     public Product getProduct(int id) {
@@ -64,8 +41,6 @@ public class Section {
         return null;
     }
 
-    ;
-
     public Product getProduct(String title) {
         for (Product product : productsList) {
             if (product.getTitle().equalsIgnoreCase(title)) {
@@ -76,69 +51,41 @@ public class Section {
         return null;
     }
 
-    public String checkoutProduct(int id) {
-        Product product = getProduct(id);
+    public String checkoutProduct(Object key, String libraryNumber) {
+        Product product = key instanceof Integer ? getProduct((int) key) : getProduct((String) key);
 
         if (product == null || product.isBorrowed()) {
-            return UNSUCCESSFUL_CHECKOUT_MESSAGE;
+            return "Sorry, that " + this.productName + " is not available.";
         }
 
-        product.setBorrowed(true);
-        product.setBorrowedBy(BibliotecaApp.libraryNumberConnected);
+        product.setBorrowedBy(libraryNumber);
 
-        return SUCCESSFUL_CHECKOUT_MESSAGE;
+        return "Thank you! Enjoy the " + productName + ".";
     }
 
-    public String checkoutProduct(String name) {
-        Product product = getProduct(name);
-
-        if (product == null || product.isBorrowed()) {
-            return UNSUCCESSFUL_CHECKOUT_MESSAGE;
-        }
-
-        product.setBorrowed(true);
-        product.setBorrowedBy(BibliotecaApp.libraryNumberConnected);
-
-        return SUCCESSFUL_CHECKOUT_MESSAGE;
-    }
-
-    public String returnProduct(int id) {
-        Product product = getProduct(id);
+    public String returnProduct(Object key) {
+        Product product = key instanceof Integer ? getProduct((int) key) : getProduct((String) key);
 
         if (product == null || !product.isBorrowed()) {
-            return UNSUCCESSFUL_RETURNING_MESSAGE;
+            return "That is not a valid " + this.productName + " to return.";
         }
 
-        product.setBorrowed(false);
         product.setBorrowedBy(null);
 
-        return SUCCESSFUL_RETURNING_MESSAGE;
+        return "Thank you for returning the " + this.productName + ".";
     }
 
-    public String returnProduct(String name) {
-        Product product = getProduct(name);
-
-        if (product == null || !product.isBorrowed()) {
-            return UNSUCCESSFUL_RETURNING_MESSAGE;
-        }
-
-        product.setBorrowed(false);
-        product.setBorrowedBy(null);
-
-        return SUCCESSFUL_RETURNING_MESSAGE;
-    }
-
-    public String toString(String libraryNumber) {
-        StringBuilder borrowedBooksString = new StringBuilder(productsList.get(0).getProductShowHeader()).append("\n");
+    public String getBorrowedListByLibraryNumber(String libraryNumber) {
+        StringBuilder borrowedBooksString = new StringBuilder(sectionName + ":\n").append(productsList.get(0).getProductShowHeader()).append("\n");
 
         for (Product product : productsList) {
             if (product.getBorrowedBy() != null && product.getBorrowedBy().equals(libraryNumber)) {
-                borrowedBooksString.append(product).append("\n");
+                borrowedBooksString.append(product);
             }
         }
 
-        if (borrowedBooksString.toString().split("\n").length == 1) {
-            return sectionName + ": You have nothing borrowed\n";
+        if (borrowedBooksString.toString().split("\n").length == 2) {
+            return sectionName + ":\n"  + "You have nothing borrowed";
         }
 
         return borrowedBooksString.toString();
