@@ -20,44 +20,42 @@ public class SectionMenu extends Menu {
     }
 
     public final void start(Scanner scanner, User loggedInUser) {
-        String terminalInput = "";
+        int input = 0;
 
         do {
             System.out.println(this);
 
             try {
-                terminalInput = getOption(Integer.valueOf(scanner.nextLine()));
+                input = Integer.valueOf(scanner.nextLine());
 
-                if (terminalInput.equals(getOption(0))) {
-                    break;
-                } else if (terminalInput.contains("Invalid")) {
-                    System.out.println(terminalInput);
-                } else if (terminalInput.contains("List")) {
-                    System.out.println(section);
-                } else {
-                    System.out.println(PRODUCT_SELECTION_MESSAGE);
-
-                    if (terminalInput.contains("Checkout")) {
-                        terminalInput = scanner.nextLine();
-
-                        if (terminalInput.matches("\\d+")) {
-                            System.out.println(section.checkoutProduct(Integer.valueOf(terminalInput), loggedInUser.getLibraryNumber()) + "\n");
-                        } else {
-                            System.out.println(section.checkoutProduct(terminalInput, loggedInUser.getLibraryNumber()) + "\n");
-                        }
-                    } else if (terminalInput.contains("Returning")) {
-                        terminalInput = scanner.nextLine();
-
-                        if (terminalInput.matches("\\d+")) {
-                            System.out.println(section.returnProduct(Integer.valueOf(terminalInput)) + "\n");
-                        } else {
-                            System.out.println(section.returnProduct(terminalInput) + "\n");
-                        }
-                    }
+                switch (input) {
+                    case 0:
+                        break;
+                    case 1:
+                        System.out.println(section);
+                        break;
+                    case 2:
+                        System.out.println(section.checkoutProduct(getProductInput(scanner), loggedInUser.getLibraryNumber()) + "\n");
+                        break;
+                    case 3:
+                        System.out.println(section.returnProduct(getProductInput(scanner)) + "\n");
+                        break;
+                    default:
+                        System.out.println(getOption(input));
                 }
             } catch (NumberFormatException e) {
                 System.out.println(INVALID_OPTION + "\n");
             }
-        } while (!terminalInput.equals(getOption(0)));
+        } while (input != 0);
+    }
+
+    public Object getProductInput(Scanner scanner) {
+        System.out.println(PRODUCT_SELECTION_MESSAGE);
+
+        String productSelected = scanner.nextLine();
+
+        return productSelected.matches("\\d")
+                ? Integer.valueOf(productSelected)
+                : productSelected;
     }
 }
