@@ -16,12 +16,12 @@ public class BibliotecaApp {
     private LoginManager loginManager;
     private Scanner scanner;
 
-    public BibliotecaApp(LoginManager loginManager, Scanner scanner) {
+    private BibliotecaApp(LoginManager loginManager, Scanner scanner) {
         this.loginManager = loginManager;
         this.scanner = scanner;
     }
 
-    public void start() {
+    private void start() {
         Optional<User> loggedInUser;
 
         String libraryNumberInput;
