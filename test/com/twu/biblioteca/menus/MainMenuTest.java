@@ -7,6 +7,7 @@ import com.twu.biblioteca.users.User;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 
 import static org.hamcrest.core.Is.is;
@@ -14,28 +15,40 @@ import static org.junit.Assert.assertThat;
 
 public class MainMenuTest {
     private MainMenu menu;
-    private Section librarySection;
-    private Section moviesSection;
+    private User loggedInUser = new User(
+            "A",
+            "a@a",
+            "999",
+            "123900",
+            "abc"
+    );
+    private Section librarySection = new Section(
+            "Book",
+            "Library",
+            Collections.singletonList(new Book("title", "author", 1992, 4, 13))
+    );
+    private Section moviesSection = new Section(
+            "Movie",
+            "Movies Section",
+            Collections.singletonList(new Movie("title", 1992, "director"))
+    );
 
     @Before
-    public void setUp() {
-        User loggedInUser = new User("A", "a@a", "999", "123900", "abc");
-        menu = new MainMenu(loggedInUser);
+    public void setUp() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        //Reset Singleton
+        Field instance = MainMenu.class.getDeclaredField("instance");
+        instance.setAccessible(true);
+        instance.set(null, null);
 
-        librarySection = new Section("Book", "Library",
-                Collections.singletonList(new Book("title", "author", 1992, 4, 13)),
-                loggedInUser);
-        moviesSection = new Section("Movie", "Movies Section",
-                Collections.singletonList(new Movie("title", 1992, "director")),
-                loggedInUser);
-
+        menu = MainMenu.getInstance();
+        menu.setLoggedInUser(loggedInUser);
         menu.addSection(librarySection);
         menu.addSection(moviesSection);
     }
 
     @Test
     public void checkWelcomeMessage() {
-        assertThat(menu.WELCOME_MESSAGE, is("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore"));
+        assertThat(menu.getWelcomeMessage(), is("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore"));
     }
 
     @Test

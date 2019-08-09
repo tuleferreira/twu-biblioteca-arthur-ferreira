@@ -1,5 +1,6 @@
 package com.twu.biblioteca.sections;
 
+import com.twu.biblioteca.menus.MainMenu;
 import com.twu.biblioteca.menus.SectionMenu;
 import com.twu.biblioteca.products.Product;
 import com.twu.biblioteca.users.User;
@@ -10,15 +11,15 @@ import java.util.List;
 public class Section {
     private String productName;
     private String sectionName;
-    private final List<Product> productsList;
-    private final User loggedUser;
+    private List<Product> productsList;
+    private final User loggedInUser;
     private final SectionMenu menu;
 
-    public Section(String productName, String sectionName, List<Product> productsList, User loggedUser) {
+    public Section(String productName, String sectionName, List<Product> productsList) {
         this.productName = productName.toLowerCase();
         this.sectionName = sectionName;
-        this.loggedUser = loggedUser;
 
+        loggedInUser = MainMenu.getInstance().getLoggedInUser();
         menu = new SectionMenu(this);
 
         this.productsList = new ArrayList<>();
@@ -71,7 +72,7 @@ public class Section {
             return "Sorry, that " + this.productName + " is not available.";
         }
 
-        product.setBorrowedBy(loggedUser.getLibraryNumber());
+        product.setBorrowedBy(loggedInUser.getLibraryNumber());
 
         return "Thank you! Enjoy the " + productName + ".";
     }
@@ -92,7 +93,7 @@ public class Section {
         StringBuilder borrowedBooksString = new StringBuilder(sectionName + ":\n").append(productsList.get(0).getProductShowHeader()).append("\n");
 
         for (Product product : productsList) {
-            if (product.getBorrowedBy() != null && product.getBorrowedBy().equals(loggedUser.getLibraryNumber())) {
+            if (product.getBorrowedBy() != null && product.getBorrowedBy().equals(loggedInUser.getLibraryNumber())) {
                 borrowedBooksString.append(product);
             }
         }

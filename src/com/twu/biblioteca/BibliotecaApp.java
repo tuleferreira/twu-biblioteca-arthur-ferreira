@@ -20,12 +20,12 @@ import java.util.stream.Collectors;
 import static com.twu.biblioteca.menus.Menu.SCANNER;
 
 public class BibliotecaApp {
-    public static MainMenu mainMenu;
-
+    private MainMenu mainMenu;
     private LoginManager loginManager;
 
     private BibliotecaApp(LoginManager loginManager) {
         this.loginManager = loginManager;
+        mainMenu = MainMenu.getInstance();
     }
 
     private void start() throws IOException {
@@ -43,9 +43,9 @@ public class BibliotecaApp {
             loggedInUser = login(libraryNumberInput, passwordInput);
         } while (!loggedInUser.isPresent());
 
-        mainMenu = new MainMenu(loggedInUser.get());
-        mainMenu.addSection(new Section("Book", "Library", parseTxt("./src/books.csv", new BookParser()), loggedInUser.get()));
-        mainMenu.addSection(new Section("Movie", "Movies Section", parseTxt("./src/movies.csv", new MovieParser()), loggedInUser.get()));
+        mainMenu.setLoggedInUser(loggedInUser.get());
+        mainMenu.addSection(new Section("Book", "Library", parseTxt("./src/books.csv", new BookParser())));
+        mainMenu.addSection(new Section("Movie", "Movies Section", parseTxt("./src/movies.csv", new MovieParser())));
         mainMenu.start();
     }
 
@@ -62,7 +62,7 @@ public class BibliotecaApp {
         return user;
     }
 
-    public <T> List<T> parseTxt(String pathname, Parser<T> parser) throws IOException {
+    public static  <T> List<T> parseTxt(String pathname, Parser<T> parser) throws IOException {
         File file = new File(pathname);
 
         return Files.lines(Paths.get(file.getAbsolutePath()))
