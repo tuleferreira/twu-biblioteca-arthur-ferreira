@@ -12,22 +12,22 @@ public class MovieTest {
 
     @Before
     public void setUp() {
-        testMovie = new Movie(1, "Test Title Movie", 1972, "Test Director", 1);
+        testMovie = new Movie( "Test Title Movie", 1972, "Test Director", 1);
     }
 
     @Test
     public void checkProductHeader() {
-        assertThat(testMovie.toString(), is("|       1 | Test Title Movie                                                      | Test Director                 | 1972         |       1 |"));
+        assertThat(testMovie.toString(), is("|       0 | Test Title Movie                                                      | Test Director                 | 1972         |       1 |"));
     }
 
     @Test
     public void shouldParseUnrated() {
-        Movie testMovie2 = new Movie(1, "Test Title Movie", 1972, "Test Director");
-        assertThat(testMovie2.parseRating(), is("Unrated"));
+        Movie testMovie2 = new Movie("Test Title Movie", 1972, "Test Director");
+        assertThat(testMovie2.getRating(), is("Unrated"));
     }
 
     @Test
     public void checkToString() {
-        assertThat(testMovie.toString(), CoreMatchers.is("|       1 | Test Title Movie                                                      | Test Director                 | 1972         |       1 |"));
+        assertThat(testMovie.toString(), CoreMatchers.is("|       0 | Test Title Movie                                                      | Test Director                 | 1972         |       1 |"));
     }
 }

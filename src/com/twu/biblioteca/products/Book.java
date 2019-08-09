@@ -6,10 +6,19 @@ public class Book extends Product {
     private final String author;
     private final LocalDate publishDate;
 
-    public Book(int id, String title, String author, int yearPublished, int monthPublished, int dayPublished) {
-        super(id, title, String.format("| %7s | %-70s| %-30s| %-10s |", "ID", "BOOK", "AUTHOR", "PUBLISHED"));
+    public Book(String title, String author, int year, int month, int day) {
+        super(title, String.format("| %7s | %-70s| %-30s| %-10s |", "ID", "BOOK", "AUTHOR", "PUBLISHED"));
         this.author = author;
-        this.publishDate = LocalDate.of(yearPublished, monthPublished, dayPublished);
+
+        this.publishDate = LocalDate.of(year, month, day);
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public LocalDate getPublishDate() {
+        return publishDate;
     }
 
     @Override

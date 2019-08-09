@@ -11,7 +11,7 @@ public class BookTest {
 
     @Before
     public void setUp() {
-        testBook = new Book(1, "Test Title", "Test Author", 1992, 4, 13);
+        testBook = new Book("Test Title", "Test Author", 1992, 4, 13);
     }
 
     @Test
@@ -21,6 +21,6 @@ public class BookTest {
 
     @Test
     public void checkToString() {
-        assertThat(testBook.toString(), is("|       1 | Test Title                                                            | Test Author                   | 13/04/1992 |"));
+        assertThat(testBook.toString(), is("|       0 | Test Title                                                            | Test Author                   | 13/04/1992 |"));
     }
 }

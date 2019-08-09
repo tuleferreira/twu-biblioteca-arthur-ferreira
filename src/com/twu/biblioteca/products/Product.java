@@ -1,24 +1,27 @@
 package com.twu.biblioteca.products;
 
 public class Product {
-    private final int id;
+    private int id;
     private final String title;
     private final String productShowHeader;
     private String borrowedBy;
 
-    public Product(int id, String title, String productShowHeader) {
-        this.id = id;
+    public Product(String title, String productShowHeader) {
         this.title = title;
         this.productShowHeader = productShowHeader;
         this.borrowedBy = null;
     }
 
-    public boolean isBorrowed() {
-        return borrowedBy != null;
-    }
-
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isBorrowed() {
+        return borrowedBy != null;
     }
 
     public String getTitle() {

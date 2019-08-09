@@ -2,21 +2,29 @@ package com.twu.biblioteca.sections;
 
 import com.twu.biblioteca.menus.SectionMenu;
 import com.twu.biblioteca.products.Product;
+import com.twu.biblioteca.users.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Section {
     private String productName;
     private String sectionName;
     private final List<Product> productsList;
+    private final User loggedUser;
     private final SectionMenu menu;
 
-    public Section(String productName, String sectionName, List<Product> productsList) {
+    public Section(String productName, String sectionName, List<Product> productsList, User loggedUser) {
         this.productName = productName.toLowerCase();
         this.sectionName = sectionName;
-        this.productsList = productsList;
+        this.loggedUser = loggedUser;
 
         menu = new SectionMenu(this);
+
+        this.productsList = new ArrayList<>();
+        for (Product product : productsList) {
+            addProduct(product);
+        }
     }
 
     public String getProductName() {
@@ -29,6 +37,11 @@ public class Section {
 
     public SectionMenu getMenu() {
         return menu;
+    }
+
+    public void addProduct(Product product) {
+        product.setId(productsList.size() + 1);
+        productsList.add(product);
     }
 
     public Product getProduct(int id) {
@@ -51,14 +64,14 @@ public class Section {
         return null;
     }
 
-    public String checkoutProduct(Object key, String libraryNumber) {
+    public String checkoutProduct(Object key) {
         Product product = key instanceof Integer ? getProduct((int) key) : getProduct((String) key);
 
         if (product == null || product.isBorrowed()) {
             return "Sorry, that " + this.productName + " is not available.";
         }
 
-        product.setBorrowedBy(libraryNumber);
+        product.setBorrowedBy(loggedUser.getLibraryNumber());
 
         return "Thank you! Enjoy the " + productName + ".";
     }
@@ -75,17 +88,17 @@ public class Section {
         return "Thank you for returning the " + this.productName + ".";
     }
 
-    public String getBorrowedListByLibraryNumber(String libraryNumber) {
+    public String getBorrowedList() {
         StringBuilder borrowedBooksString = new StringBuilder(sectionName + ":\n").append(productsList.get(0).getProductShowHeader()).append("\n");
 
         for (Product product : productsList) {
-            if (product.getBorrowedBy() != null && product.getBorrowedBy().equals(libraryNumber)) {
+            if (product.getBorrowedBy() != null && product.getBorrowedBy().equals(loggedUser.getLibraryNumber())) {
                 borrowedBooksString.append(product);
             }
         }
 
         if (borrowedBooksString.toString().split("\n").length == 2) {
-            return sectionName + ":\n"  + "You have nothing borrowed";
+            return sectionName + ":\n" + "You have nothing borrowed";
         }
 
         return borrowedBooksString.toString();

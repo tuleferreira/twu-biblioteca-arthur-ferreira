@@ -20,15 +20,7 @@ public class User {
     }
 
     public boolean passwordMatches(String password) {
-        boolean passwordCheck = this.password.equals(password);
-
-        if (!passwordCheck) {
-            System.out.println("Incorrect password.\n");
-            return false;
-        }
-
-
-        return true;
+        return this.password.equals(password);
     }
 
     @Override

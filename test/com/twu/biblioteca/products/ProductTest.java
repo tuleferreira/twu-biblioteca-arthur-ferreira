@@ -10,7 +10,7 @@ public class ProductTest {
 
     @Before
     public void setUp() throws Exception {
-        product = new Product(1, "Titler", "Header");
+        product = new Product( "Titler", "Header");
     }
 
     @Test

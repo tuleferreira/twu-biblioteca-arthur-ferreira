@@ -7,8 +7,7 @@ import com.twu.biblioteca.users.User;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Optional;
+import java.util.Collections;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -20,21 +19,15 @@ public class MainMenuTest {
 
     @Before
     public void setUp() {
-        menu = new MainMenu(new User("A", "a@a", "999", "123900", "abc"));
+        User loggedInUser = new User("A", "a@a", "999", "123900", "abc");
+        menu = new MainMenu(loggedInUser);
 
-        librarySection = new Section("Book", "Library", Arrays.asList(
-                new Book(1, "A Game of Thrones", "George R. R. Martin", 1992, 8, 1),
-                new Book(2, "Thoughts of Dog 2019-2020 16-Month Weekly/Monthly Diary", "Matt Nelson", 2019, 8, 1),
-                new Book(3, "Harry Potter and the Prisoner of Azkaban", "J.K. Rowling", 1999, 7, 8),
-                new Book(4, "Talking to Robots : A Brief Guide to Our Human-Robot Futures", "David Ewing Duncan", 2019, 7, 16)
-        ));
-
-        moviesSection = new Section("Movie", "Movies Section", Arrays.asList(
-                new Movie(1, "The Godfather", 1972, "Francis Ford Coppola", 10),
-                new Movie(2, "The Dark Knight", 2008, "Christopher Nolan", 9),
-                new Movie(3, "Casablanca", 1942, "Michael Curtiz", 9),
-                new Movie(4, "Schindler's List", 1993, "Steven Spielberg")
-        ));
+        librarySection = new Section("Book", "Library",
+                Collections.singletonList(new Book("title", "author", 1992, 4, 13)),
+                loggedInUser);
+        moviesSection = new Section("Movie", "Movies Section",
+                Collections.singletonList(new Movie("title", 1992, "director")),
+                loggedInUser);
 
         menu.addSection(librarySection);
         menu.addSection(moviesSection);
@@ -47,30 +40,24 @@ public class MainMenuTest {
 
     @Test
     public void shouldHaveInformationAndCheckedOutOption() {
-        assertThat(menu.getOption(1), is("View my information"));
-        assertThat(menu.getOption(2), is("View checked out list"));
+        assertThat(menu.options.get(1).title, is("View my information"));
+        assertThat(menu.options.get(2).title, is("View checked out list"));
     }
 
     @Test
     public void shouldIndexSectionsInOrder() {
-        assertThat(menu.getOption(3), is("Library"));
-        assertThat(menu.getOption(4), is("Movies Section"));
+        assertThat(menu.options.get(3).title, is("Library"));
+        assertThat(menu.options.get(4).title, is("Movies Section"));
     }
 
     @Test
     public void checkInvalidOptionMessage() {
-        assertThat(menu.getOption(-1), is("Please select a valid option!"));
-    }
-
-    @Test
-    public void shouldGetSection() {
-        assertThat(menu.getSection("Library"), is(Optional.of(librarySection)));
-        assertThat(menu.getSection("Wrong Section"), is(Optional.empty()));
+        assertThat(menu.INVALID_OPTION, is("Please select a valid option!"));
     }
 
     @Test
     public void shouldGetBorrowedListsOfSections() {
-        assertThat(menu.getBorrowedListsOfSections("123900"),
+        assertThat(menu.getBorrowedListsOfSections(),
                 is("Library:\n" + "You have nothing borrowed\n" +
                         "\n" +
                         "Movies Section:\n" + "You have nothing borrowed"));
