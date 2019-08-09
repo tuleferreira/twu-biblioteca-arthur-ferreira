@@ -40,14 +40,14 @@ public class MainMenuTest {
 
     @Test
     public void shouldHaveInformationAndCheckedOutOption() {
-        assertThat(menu.options.get(1).title, is("View my information"));
-        assertThat(menu.options.get(2).title, is("View checked out list"));
+        assertThat(menu.getOptions().get(1).title, is("View my information"));
+        assertThat(menu.getOptions().get(2).title, is("View checked out list"));
     }
 
     @Test
     public void shouldIndexSectionsInOrder() {
-        assertThat(menu.options.get(3).title, is("Library"));
-        assertThat(menu.options.get(4).title, is("Movies Section"));
+        assertThat(menu.getOptions().get(3).title, is("Library"));
+        assertThat(menu.getOptions().get(4).title, is("Movies Section"));
     }
 
     @Test
