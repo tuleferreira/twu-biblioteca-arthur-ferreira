@@ -47,11 +47,6 @@ public class MainMenuTest {
     }
 
     @Test
-    public void checkWelcomeMessage() {
-        assertThat(menu.getWelcomeMessage(), is("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore"));
-    }
-
-    @Test
     public void shouldHaveInformationAndCheckedOutOption() {
         assertThat(menu.getOptions().get(1).title, is("View my information"));
         assertThat(menu.getOptions().get(2).title, is("View checked out list"));

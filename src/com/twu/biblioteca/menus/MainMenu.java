@@ -12,7 +12,6 @@ import static com.twu.biblioteca.menus.MenuOption.option;
 public class MainMenu extends Menu {
     private static MainMenu instance;
 
-    private final String WELCOME_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore";
     private List<Section> sectionsList;
     private User loggedInUser;
 
@@ -22,8 +21,6 @@ public class MainMenu extends Menu {
         options.put(0, option("Quit", () -> System.exit(0)));
         options.put(1, option("View my information", () -> System.out.println(loggedInUser)));
         options.put(2, option("View checked out list", () -> System.out.println(getBorrowedListsOfSections())));
-
-        System.out.println(String.format("%s\n", WELCOME_MESSAGE));
     }
 
     public static MainMenu getInstance() {
@@ -44,10 +41,6 @@ public class MainMenu extends Menu {
                 System.out.println(INVALID_OPTION);
             }
         }
-    }
-
-    public String getWelcomeMessage() {
-        return WELCOME_MESSAGE;
     }
 
     public User getLoggedInUser() {

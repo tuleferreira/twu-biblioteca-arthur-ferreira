@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -21,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 public class BibliotecaAppTest {
     private BibliotecaApp bibliotecaApp;
+    private Field WELCOME_MESSAGE;
     private Method login;
     private Method parseTxt;
 
@@ -42,11 +44,19 @@ public class BibliotecaAppTest {
         constructor.setAccessible(true);
         bibliotecaApp = (BibliotecaApp) constructor.newInstance(loginManager);
 
+        WELCOME_MESSAGE = bibliotecaApp.getClass().getDeclaredField("WELCOME_MESSAGE");
+        WELCOME_MESSAGE.setAccessible(true);
+
         login = bibliotecaApp.getClass().getDeclaredMethod("login", String.class, String.class);
         login.setAccessible(true);
 
         parseTxt = bibliotecaApp.getClass().getDeclaredMethod("parseTxt", String.class, Parser.class);
         parseTxt.setAccessible(true);
+    }
+
+    @Test
+    public void checkWelcomeMessage() throws IllegalAccessException {
+        assertThat(WELCOME_MESSAGE.get(bibliotecaApp), is("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore"));
     }
 
     @Test

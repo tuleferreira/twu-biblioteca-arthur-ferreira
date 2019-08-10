@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
 import static com.twu.biblioteca.menus.Menu.SCANNER;
 
 public class BibliotecaApp {
+    private static final String WELCOME_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore";
+
     private MainMenu mainMenu;
     private LoginManager loginManager;
 
@@ -32,6 +34,8 @@ public class BibliotecaApp {
         Optional<User> loggedInUser;
         String libraryNumberInput;
         String passwordInput;
+
+        System.out.println(String.format("%s\n", WELCOME_MESSAGE));
 
         do {
             System.out.println("Library Number:");
