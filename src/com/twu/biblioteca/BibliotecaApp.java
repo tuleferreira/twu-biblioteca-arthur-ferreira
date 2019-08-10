@@ -62,7 +62,7 @@ public class BibliotecaApp {
         return user;
     }
 
-    public static  <T> List<T> parseTxt(String pathname, Parser<T> parser) throws IOException {
+    private <T> List<T> parseTxt(String pathname, Parser<T> parser) throws IOException {
         File file = new File(pathname);
 
         return Files.lines(Paths.get(file.getAbsolutePath()))
