@@ -6,26 +6,24 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public abstract class Menu {
-    public static final Scanner SCANNER = new Scanner(System.in);
-    protected final String INVALID_OPTION = "Please select a valid option!";
-    protected Map<Integer, MenuOption> options = new HashMap<>();
+    public static final Scanner SCANNER;
+    static final String INVALID_OPTION;
+
+    static {
+        SCANNER = new Scanner(System.in);
+        INVALID_OPTION = "Please select a valid option!";
+    }
+
+    final Map<Integer, MenuOption> options = new HashMap<>();
 
     abstract void start();
 
-    public String getInvalidOption() {
-        return INVALID_OPTION;
-    }
-
-    public Map<Integer, MenuOption> getOptions() {
-        return options;
-    }
-
     @Override
     public String toString() {
-        return "Choose between those options:\n" +
+        return "Choose between those options:" +
                 options.entrySet()
                         .stream()
-                        .map(e -> e.getKey() + " - " + e.getValue().title + ".\n")
+                        .map(e -> String.format("\n%s - %s.", e.getKey(), e.getValue().title))
                         .collect(Collectors.joining());
     }
 }

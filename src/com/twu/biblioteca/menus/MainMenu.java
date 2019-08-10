@@ -34,7 +34,7 @@ public class MainMenu extends Menu {
     @Override
     public final void start() {
         while (true) {
-            System.out.println(String.format("\n%s", this));
+            System.out.println(String.format("\n%s\n", this));
             try {
                 options.get(Integer.valueOf(SCANNER.nextLine())).behaviour.execute();
             } catch (Exception e) {

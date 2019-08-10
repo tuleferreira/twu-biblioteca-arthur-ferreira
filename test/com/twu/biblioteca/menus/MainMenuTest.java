@@ -34,28 +34,33 @@ public class MainMenuTest {
     );
 
     @Before
-    public void setUp() throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+    public void setUp() throws NoSuchFieldException, IllegalAccessException {
         //Reset Singleton
         Field instance = MainMenu.class.getDeclaredField("instance");
         instance.setAccessible(true);
         instance.set(null, null);
 
         menu = MainMenu.getInstance();
+
         menu.setLoggedInUser(loggedInUser);
         menu.addSection(librarySection);
         menu.addSection(moviesSection);
     }
 
     @Test
-    public void shouldHaveInformationAndCheckedOutOption() {
-        assertThat(menu.getOptions().get(1).title, is("View my information"));
-        assertThat(menu.getOptions().get(2).title, is("View checked out list"));
+    public void shouldHaveViewInformation() {
+        assertThat(menu.options.get(1).title, is("View my information"));
     }
 
     @Test
-    public void shouldIndexSectionsInOrder() {
-        assertThat(menu.getOptions().get(3).title, is("Library"));
-        assertThat(menu.getOptions().get(4).title, is("Movies Section"));
+    public void shouldHaveCheckedOut() {
+        assertThat(menu.options.get(2).title, is("View checked out list"));
+    }
+
+    @Test
+    public void shouldHaveSectionOption() {
+        assertThat(menu.options.get(3).title, is("Library"));
+        assertThat(menu.options.get(4).title, is("Movies Section"));
     }
 
     @Test
@@ -65,19 +70,25 @@ public class MainMenuTest {
 
     @Test
     public void shouldGetBorrowedListsOfSections() {
-        assertThat(menu.getBorrowedListsOfSections(),
-                is("Library:\n" + "You have nothing borrowed\n" +
-                        "\n" +
-                        "Movies Section:\n" + "You have nothing borrowed"));
+        assertThat(menu.getBorrowedListsOfSections(), is(String.format("%s\n%s\n\n%s\n%s",
+                "Library:",
+                "You have nothing borrowed",
+                "Movies Section:",
+                "You have nothing borrowed"
+                )
+        ));
     }
 
     @Test
     public void checkToString() {
-        assertThat(menu.toString(), is("Choose between those options:\n" +
-                "0 - Quit.\n" +
-                "1 - View my information.\n" +
-                "2 - View checked out list.\n" +
-                "3 - Library.\n" +
-                "4 - Movies Section.\n"));
+        assertThat(menu.toString(), is(String.format("%s\n%s\n%s\n%s\n%s\n%s",
+                "Choose between those options:",
+                "0 - Quit.",
+                "1 - View my information.",
+                "2 - View checked out list.",
+                "3 - Library.",
+                "4 - Movies Section."
+                )
+        ));
     }
 }
