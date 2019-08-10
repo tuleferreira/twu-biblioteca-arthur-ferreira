@@ -65,7 +65,7 @@ public class MainMenuTest {
 
     @Test
     public void checkInvalidOptionMessage() {
-        assertThat(menu.INVALID_OPTION, is("Please select a valid option!"));
+        assertThat(Menu.INVALID_OPTION, is("Please select a valid option!"));
     }
 
     @Test

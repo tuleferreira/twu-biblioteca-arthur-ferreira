@@ -3,6 +3,8 @@ package com.twu.biblioteca.users;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.Field;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
@@ -11,20 +13,37 @@ public class UserTest {
 
     @Before
     public void setUp() {
-        user = new User("Name", "test@gmail.com", "(51) 11111-2222", "123-4567", "testpass123");
+        user = new User(
+                "Kendrick Lamar",
+                "kendrick.lamar@hotmail.com",
+                "9999999",
+                "123-4567",
+                "lam@r"
+        );
+    }
+
+    @Test
+    public void shouldHashPassword() throws NoSuchFieldException, IllegalAccessException {
+        Field password = user.getClass().getDeclaredField("password");
+        password.setAccessible(true);
+        assertNotEquals(password.get(user), "lam@r");
+        assertTrue(password.get(user) instanceof byte[]);
     }
 
     @Test
     public void checkPasswordMatches() {
-        assertTrue(user.passwordMatches("testpass123"));
+        assertTrue(user.passwordMatches("lam@r"));
         assertFalse(user.passwordMatches("wrongpass"));
     }
 
     @Test
     public void checkToString() {
-        assertThat(user.toString(), is("LN - 123-4567\n" +
-                "Name: Name\n" +
-                "Email: test@gmail.com\n" +
-                "Phone: (51) 11111-2222"));
+        assertThat(user.toString(), is(String.format("%s\n%s\n%s\n%s",
+                "LN - 123-4567",
+                "Name: Kendrick Lamar",
+                "Email: kendrick.lamar@hotmail.com",
+                "Phone: 9999999"
+                )
+        ));
     }
 }
