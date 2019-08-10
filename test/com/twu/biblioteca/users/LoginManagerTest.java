@@ -27,7 +27,7 @@ public class LoginManagerTest {
     }
 
     @Test
-    public void library_number_serves_as_user_identifier() {
+    public void shouldIdentifyUserByLibraryNumber() {
         assertThat(manager.identifyUserByLibraryNumber("123-4567"), is(Optional.of(kendrickLamar)));
         assertThat(manager.identifyUserByLibraryNumber("bla bla"), is(Optional.empty()));
     }
