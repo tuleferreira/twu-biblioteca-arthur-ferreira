@@ -36,7 +36,6 @@ public class MainMenu extends Menu {
         while (true) {
             System.out.println(String.format("\n%s\n", this));
             try {
-                // TODO: I must put a break; if the value is 0? Is calling a method with while inside another while bad?
                 options.get(Integer.valueOf(SCANNER.nextLine())).behaviour.execute();
             } catch (Exception e) {
                 System.out.println(INVALID_OPTION);

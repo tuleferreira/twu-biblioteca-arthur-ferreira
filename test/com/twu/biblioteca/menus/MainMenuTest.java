@@ -10,6 +10,7 @@ import org.junit.Test;
 import java.lang.reflect.Field;
 import java.util.Collections;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -19,18 +20,8 @@ public class MainMenuTest {
             "A",
             "a@a",
             "999",
-            "123900",
+            "123-9000",
             "abc"
-    );
-    private Section librarySection = new Section(
-            "Book",
-            "Library",
-            Collections.singletonList(new Book("title", "author", 1992, 4, 13))
-    );
-    private Section moviesSection = new Section(
-            "Movie",
-            "Movies Section",
-            Collections.singletonList(new Movie("title", 1992, "director"))
     );
 
     @Before
@@ -43,8 +34,16 @@ public class MainMenuTest {
         menu = MainMenu.getInstance();
 
         menu.setLoggedInUser(loggedInUser);
-        menu.addSection(librarySection);
-        menu.addSection(moviesSection);
+        menu.addSection(new Section(
+                "Book",
+                "Library",
+                Collections.singletonList(new Book("title", "author", 1992, 4, 13))
+        ));
+        menu.addSection(new Section(
+                "Movie",
+                "Movies Section",
+                Collections.singletonList(new Movie("title", 1992, "director"))
+        ));
     }
 
     @Test
@@ -70,13 +69,8 @@ public class MainMenuTest {
 
     @Test
     public void shouldGetBorrowedListsOfSections() {
-        assertThat(menu.getBorrowedListsOfSections(), is(String.format("%s\n%s\n\n%s\n%s",
-                "Library:",
-                "You have nothing borrowed",
-                "Movies Section:",
-                "You have nothing borrowed"
-                )
-        ));
+        assertThat(menu.getBorrowedListsOfSections(), containsString("Library:"));
+        assertThat(menu.getBorrowedListsOfSections(), containsString("Movies Section:"));
     }
 
     @Test

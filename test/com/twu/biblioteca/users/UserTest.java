@@ -10,9 +10,10 @@ import static org.junit.Assert.*;
 
 public class UserTest {
     private User user;
+    private Field password;
 
     @Before
-    public void setUp() {
+    public void setUp() throws NoSuchFieldException {
         user = new User(
                 "Kendrick Lamar",
                 "kendrick.lamar@hotmail.com",
@@ -20,12 +21,13 @@ public class UserTest {
                 "123-4567",
                 "lam@r"
         );
+
+        password = user.getClass().getDeclaredField("password");
+        password.setAccessible(true);
     }
 
     @Test
-    public void shouldHashPassword() throws NoSuchFieldException, IllegalAccessException {
-        Field password = user.getClass().getDeclaredField("password");
-        password.setAccessible(true);
+    public void shouldHashPassword() throws IllegalAccessException {
         assertNotEquals(password.get(user), "lam@r");
         assertTrue(password.get(user) instanceof byte[]);
     }

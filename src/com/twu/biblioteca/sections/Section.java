@@ -1,19 +1,22 @@
 package com.twu.biblioteca.sections;
 
 import com.twu.biblioteca.menus.MainMenu;
+import com.twu.biblioteca.menus.Menu;
 import com.twu.biblioteca.menus.SectionMenu;
 import com.twu.biblioteca.products.Product;
 import com.twu.biblioteca.users.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Section {
     private String productName;
     private String sectionName;
     private List<Product> productsList;
-    private final User loggedInUser;
-    private final SectionMenu menu;
+    private User loggedInUser;
+    private final Menu menu;
 
     public Section(String productName, String sectionName, List<Product> productsList) {
         this.productName = productName.toLowerCase();
@@ -36,7 +39,7 @@ public class Section {
         return sectionName;
     }
 
-    public SectionMenu getMenu() {
+    public Menu getMenu() {
         return menu;
     }
 
@@ -45,76 +48,76 @@ public class Section {
         productsList.add(product);
     }
 
-    public Product getProduct(int id) {
-        for (Product product : productsList) {
-            if (product.getId() == id) {
-                return product;
-            }
-        }
-
-        return null;
+    public Optional<Product> getProduct(int id) {
+        return productsList.stream()
+                .filter(product -> id == product.getId())
+                .findFirst();
     }
 
-    public Product getProduct(String title) {
-        for (Product product : productsList) {
-            if (product.getTitle().equalsIgnoreCase(title)) {
-                return product;
-            }
-        }
-
-        return null;
+    public Optional<Product> getProduct(String title) {
+        return productsList.stream()
+                .filter(product -> product.getTitle().equalsIgnoreCase(title))
+                .findFirst();
     }
 
     public String checkoutProduct(Object key) {
-        Product product = key instanceof Integer ? getProduct((int) key) : getProduct((String) key);
+        Optional<Product> product = key instanceof Integer ? getProduct((int) key) : getProduct((String) key);
 
-        if (product == null || product.isBorrowed()) {
-            return "Sorry, that " + this.productName + " is not available.";
+        if (!product.isPresent()) {
+            return String.format("Sorry, this %s doesn't exist.", productName);
+        } else if (product.get().isBorrowed()) {
+            return String.format("Sorry, the '%s' is not available.", product.get().getTitle());
         }
 
-        product.setBorrowedBy(loggedInUser.getLibraryNumber());
-
-        return "Thank you! Enjoy the " + productName + ".";
+        product.get().setBorrowedBy(loggedInUser.getLibraryNumber());
+        return String.format("Thank you! Enjoy the '%s'.", product.get().getTitle());
     }
 
     public String returnProduct(Object key) {
-        Product product = key instanceof Integer ? getProduct((int) key) : getProduct((String) key);
+        Optional<Product> product = key instanceof Integer ? getProduct((int) key) : getProduct((String) key);
 
-        if (product == null || !product.isBorrowed()) {
-            return "That is not a valid " + this.productName + " to return.";
+        if (!product.isPresent()) {
+            return String.format("Sorry, this %s doesn't exist.", productName);
+        } else if (!product.get().isBorrowed()) {
+            return String.format("Sorry, the '%s' is not borrowed.", product.get().getTitle());
         }
 
-        product.setBorrowedBy(null);
-
-        return "Thank you for returning the " + this.productName + ".";
+        product.get().setBorrowedBy(null);
+        return String.format("Thank you for returning the '%s'.", product.get().getTitle());
     }
 
     public String getBorrowedList() {
-        StringBuilder borrowedBooksString = new StringBuilder(sectionName + ":\n").append(productsList.get(0).getProductShowHeader()).append("\n");
+        List<Product> borrowedList = productsList.stream()
+                .filter(product -> product.getBorrowedBy().equals(Optional.of(loggedInUser.getLibraryNumber())))
+                .collect(Collectors.toList());
 
-        for (Product product : productsList) {
-            if (product.getBorrowedBy() != null && product.getBorrowedBy().equals(loggedInUser.getLibraryNumber())) {
-                borrowedBooksString.append(product);
-            }
+        if (borrowedList.size() == 0) {
+            return String.format("%s:\n%s", sectionName, "You have nothing borrowed");
         }
 
-        if (borrowedBooksString.toString().split("\n").length == 2) {
-            return sectionName + ":\n" + "You have nothing borrowed";
-        }
-
-        return borrowedBooksString.toString();
+        return String.format(
+                "%s:\n%s\n%s",
+                sectionName,
+                productsList.get(0).getProductShowHeader(),
+                borrowedList.stream()
+                        .map(Product::toString)
+                        .collect(Collectors.joining("\n"))
+        );
     }
 
     @Override
     public String toString() {
-        StringBuilder allBooksString = new StringBuilder(productsList.get(0).getProductShowHeader()).append("\n");
-
-        for (Product product : productsList) {
-            if (!product.isBorrowed()) {
-                allBooksString.append(product).append("\n");
-            }
+        if (productsList.size() == 0) {
+            return String.format("%s:\n%s", sectionName, "This section is empty.");
         }
 
-        return allBooksString.toString();
+        return String.format(
+                "%s:\n%s\n%s",
+                sectionName,
+                productsList.get(0).getProductShowHeader(),
+                productsList.stream()
+                        .map(Product::toString)
+                        .collect(Collectors.joining("\n"))
+        );
     }
 }
